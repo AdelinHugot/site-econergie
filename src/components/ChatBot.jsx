@@ -19,11 +19,45 @@ function ChatBot() {
       ]
     }
   ])
+  const [showNotification, setShowNotification] = useState(false)
+  const [notification, setNotification] = useState('')
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [userData, setUserData] = useState({})
   const [error, setError] = useState(null)
   const messagesEndRef = useRef(null)
+
+  // Liste de tips et fun facts
+  const tips = [
+    'Saviez-vous ? Un poêle à bois bien entretenu peut réduire votre facture de chauffage de 35 à 45 % ! 🔥',
+    'Conseil : Utilisez du bois sec (humidité < 20%) pour optimiser le rendement de votre poêle.',
+    'Fun fact : Une cheminée de qualité peut chauffer une surface jusqu\'à 220 m² ! 🏠',
+    'Astuce : L\'entretien annuel obligatoire garantit une performance optimale et une sécurité maximale.',
+    'Bon à savoir : Nos poêles granulés offrent un rendement jusqu\'à 92 % ! 🎯',
+    'Conseil : Une maison bien isolée + un bon poêle = confort sans limite et économies assurées.',
+    'Did you know ? Les foyers fermés transforment votre cheminée en véritable source de chauffage performant.',
+    'Astuce : Le Pellet Drive 24/7 vous permet d\'accéder à vos granulés quand vous en avez besoin ! ⏰',
+    'Fun fact : Un poêle mixte (bois + granulés) vous offre une flexibilité totale. Génial non ? 🔄',
+    'Conseil : Consultez nos experts gratuitement pour trouver LA solution parfaite pour votre maison.'
+  ]
+
+  // Afficher une notification après 5 secondes (ou au premier clic du chatbot)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const randomTip = tips[Math.floor(Math.random() * tips.length)]
+      setNotification(randomTip)
+      setShowNotification(true)
+
+      // Masquer la notification après 10 secondes
+      const hideTimer = setTimeout(() => {
+        setShowNotification(false)
+      }, 10000)
+
+      return () => clearTimeout(hideTimer)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -137,10 +171,39 @@ function ChatBot() {
 
   return (
     <div className="chatbot-container">
+      {/* Notification de tip */}
+      {showNotification && (
+        <div
+          className="chatbot-notification"
+          style={{
+            position: 'fixed',
+            bottom: '120px',
+            right: '20px',
+            background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
+            color: 'white',
+            padding: '1rem 1.5rem',
+            borderRadius: '12px',
+            maxWidth: '300px',
+            boxShadow: '0 10px 30px rgba(232, 76, 31, 0.4)',
+            fontSize: '0.9rem',
+            lineHeight: 1.5,
+            animation: 'slideUp 0.3s ease forwards',
+            zIndex: 999,
+            cursor: 'pointer'
+          }}
+          onClick={() => setShowNotification(false)}
+        >
+          {notification}
+        </div>
+      )}
+
       {/* Bouton flottant */}
       <button
         className={`chatbot-trigger ${isOpen ? 'hidden' : ''}`}
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true)
+          setShowNotification(false)
+        }}
         aria-label="Ouvrir le chatbot"
       >
         <span className="chatbot-icon">💬</span>

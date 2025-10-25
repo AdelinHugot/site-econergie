@@ -201,23 +201,6 @@ function Realizations() {
                 <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '1rem', lineHeight: 1.5 }}>
                   {project.description}
                 </p>
-                <button style={{
-                  width: '100%',
-                  padding: '0.8rem',
-                  background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '0.95rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 20px rgba(232, 76, 31, 0.3)'}
-                onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
-                >
-                  Voir les détails
-                </button>
               </div>
             </div>
           ))}

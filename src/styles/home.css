@@ -1,0 +1,225 @@
+/* Home Page Global Styles */
+
+/* Section spacing for better visual breathing room */
+section {
+  scroll-behavior: smooth;
+}
+
+/* Consistent section padding */
+@media (min-width: 1401px) {
+  section[style*="padding"] {
+    padding: 6rem 2rem !important;
+  }
+}
+
+@media (max-width: 1400px) and (min-width: 769px) {
+  section[style*="padding"] {
+    padding: 5rem 2rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  section[style*="padding"] {
+    padding: 3rem 1.5rem !important;
+  }
+}
+
+/* Typography improvements */
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Smooth transitions throughout */
+button, a, [role="button"] {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Better focus states for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #e84c1f;
+  outline-offset: 2px;
+}
+
+/* Image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section divider */
+.section-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%);
+  margin: 0 auto 1.5rem;
+  border-radius: 2px;
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rise {
+  to {
+    opacity: 0;
+    transform: translateY(-80px) translateX(20px);
+  }
+}
+
+/* Hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(232, 76, 31, 0.2);
+}
+
+/* Button base styles */
+.btn-base {
+  padding: 1.2rem 2.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%);
+  color: white;
+  box-shadow: 0 15px 40px rgba(232, 76, 31, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 60px rgba(232, 76, 31, 0.6);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: white;
+  transform: translateY(-5px);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem) !important;
+  }
+
+  h2 {
+    font-size: 1.8rem !important;
+  }
+
+  h3 {
+    font-size: 1.2rem !important;
+  }
+
+  p {
+    font-size: 0.95rem !important;
+  }
+
+  .btn-base {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #f0f0f0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+  }
+
+  p {
+    color: #d0d0d0;
+  }
+}
+
+/* Print styles */
+@media print {
+  section {
+    page-break-inside: avoid;
+  }
+
+  button {
+    display: none;
+  }
+}

@@ -1,18 +1,22 @@
 import React from 'react'
-import Hero from '../components/Hero'
+import HeroImproved from '../components/HeroImproved'
+import LifestyleSection from '../components/LifestyleSection'
+import CategoriesEnhanced from '../components/CategoriesEnhanced'
 import Realizations from '../components/Realizations'
-import Reviews from '../components/Reviews'
-import CategoriesShowcase from '../components/CategoriesShowcase'
+import ReviewsEnhanced from '../components/ReviewsEnhanced'
+import WhyEconergie from '../components/WhyEconergie'
 import FAQSection from '../components/FAQSection'
 import NewsletterCTA from '../components/NewsletterCTA'
 
 function Home() {
   return (
     <>
-      <Hero />
+      <HeroImproved />
+      <LifestyleSection />
+      <CategoriesEnhanced />
       <Realizations />
-      <Reviews />
-      <CategoriesShowcase />
+      <ReviewsEnhanced />
+      <WhyEconergie />
       <FAQSection />
       <NewsletterCTA />
     </>

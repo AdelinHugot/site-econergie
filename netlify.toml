@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables for production
+[context.production.environment]
+  VITE_N8N_WEBHOOK_URL = "https://n8n.srv800894.hstgr.cloud/webhook/agent-econergie"
+  VITE_N8N_TIMEOUT = "30000"
+  VITE_N8N_RETRY_ATTEMPTS = "3"
+  VITE_N8N_RETRY_DELAY = "1000"

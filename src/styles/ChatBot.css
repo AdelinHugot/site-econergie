@@ -246,6 +246,8 @@
   font-size: 0.95rem;
   line-height: 1.5;
   word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 /* ========== MESSAGE BUTTONS ========== */

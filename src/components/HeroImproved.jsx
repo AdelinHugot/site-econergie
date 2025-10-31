@@ -59,19 +59,19 @@ function HeroImproved() {
         zIndex: 1,
         pointerEvents: 'none'
       }}>
-        {[...Array(5)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <div
             key={i}
             style={{
               position: 'absolute',
-              width: '4px',
-              height: '4px',
-              background: 'rgba(232, 76, 31, 0.6)',
+              width: `${3 + Math.random() * 3}px`,
+              height: `${3 + Math.random() * 3}px`,
+              background: `rgba(232, 76, 31, ${0.4 + Math.random() * 0.4})`,
               borderRadius: '50%',
-              left: `${20 + i * 15}%`,
-              bottom: '20%',
-              animation: `rise ${2 + i * 0.3}s ease-out infinite`,
-              animationDelay: `${i * 0.2}s`
+              left: `${Math.random() * 100}%`,
+              bottom: `${Math.random() * 30}%`,
+              animation: `rise ${2 + Math.random() * 2}s ease-out infinite`,
+              animationDelay: `${i * 0.15}s`
             }}
           />
         ))}
@@ -216,22 +216,26 @@ function HeroImproved() {
             Explorer Nos Produits
           </button>
         </div>
+      </div>
 
-        {/* Scroll indicator */}
+      {/* Scroll indicator - positioned at bottom of section */}
+      <div style={{
+        position: 'absolute',
+        bottom: '3rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        animation: 'bounce 2.5s ease-in-out infinite',
+        opacity: 1,
+        zIndex: 100
+      }}>
         <div style={{
-          position: 'absolute',
-          bottom: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          animation: 'bounce 2s ease-in-out infinite',
-          opacity: 0.7
+          fontSize: '2.5rem',
+          color: 'white',
+          animation: 'bounce 2.5s ease-in-out infinite',
+          textShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+          fontWeight: 'bold'
         }}>
-          <div style={{
-            fontSize: '1.5rem',
-            animation: 'bounce 2s ease-in-out infinite'
-          }}>
-            ↓
-          </div>
+          ↓
         </div>
       </div>
 
@@ -274,7 +278,7 @@ function HeroImproved() {
             transform: translateX(-50%) translateY(0);
           }
           50% {
-            transform: translateX(-50%) translateY(10px);
+            transform: translateX(-50%) translateY(15px);
           }
         }
 

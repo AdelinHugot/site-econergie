@@ -166,22 +166,26 @@ function Hero() {
             Explorer Nos Produits
           </button>
         </div>
+      </div>
 
-        {/* Scroll indicator */}
+      {/* Scroll indicator - positioned at bottom of section */}
+      <div style={{
+        position: 'absolute',
+        bottom: '2%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        animation: 'bounce 2.5s ease-in-out infinite',
+        opacity: 1,
+        zIndex: 100
+      }}>
         <div style={{
-          position: 'absolute',
-          bottom: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          animation: 'bounce 2s ease-in-out infinite',
-          opacity: 0.7
+          fontSize: '2.5rem',
+          color: 'white',
+          animation: 'bounce 2.5s ease-in-out infinite',
+          textShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+          fontWeight: 'bold'
         }}>
-          <div style={{
-            fontSize: '1.5rem',
-            animation: 'bounce 2s ease-in-out infinite'
-          }}>
-            ↓
-          </div>
+          ↓
         </div>
       </div>
 
@@ -224,7 +228,7 @@ function Hero() {
             transform: translateX(-50%) translateY(0);
           }
           50% {
-            transform: translateX(-50%) translateY(10px);
+            transform: translateX(-50%) translateY(15px);
           }
         }
       `}</style>

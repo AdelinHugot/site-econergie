@@ -41,8 +41,11 @@ function ChatBot() {
     'Conseil : Consultez nos experts gratuitement pour trouver LA solution parfaite pour votre maison.'
   ]
 
-  // Afficher une notification après 5 secondes (ou au premier clic du chatbot)
+  // Afficher une notification après 5 secondes (mais pas si le chatbot est ouvert)
   useEffect(() => {
+    // Ne pas afficher la notification si le chatbot est déjà ouvert
+    if (isOpen) return
+
     const timer = setTimeout(() => {
       const randomTip = tips[Math.floor(Math.random() * tips.length)]
       setNotification(randomTip)
@@ -57,7 +60,7 @@ function ChatBot() {
     }, 5000)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, [isOpen])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })

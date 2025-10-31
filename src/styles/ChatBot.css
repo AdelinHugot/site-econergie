@@ -350,6 +350,26 @@
   cursor: not-allowed;
 }
 
+.chatbot-input::placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+.chatbot-input::-webkit-input-placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+.chatbot-input:-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+.chatbot-input::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+
 .chatbot-send-btn {
   width: 40px;
   height: 40px;

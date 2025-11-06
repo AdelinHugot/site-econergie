@@ -19,7 +19,7 @@ function Header() {
       <nav>
         <div className="logo-container">
           <Link to="/" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <img src="/Econergie_Logo.png" alt="Econergie Logo" />
+            <img src="/Econergie_Logo.webp" alt="Econergie Logo" />
           </Link>
         </div>
         <ul style={{ display: isMenuOpen ? 'flex' : 'flex' }}>

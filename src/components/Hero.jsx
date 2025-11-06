@@ -112,7 +112,9 @@ function Hero() {
           flexWrap: 'wrap',
           animation: 'slideUp 0.8s ease 0.5s both'
         }}>
-          <button style={{
+          <button
+            aria-label="Demander un devis pour nos poêles et cheminées"
+            style={{
             padding: '1.2rem 2.5rem',
             background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
             color: 'white',
@@ -124,7 +126,15 @@ function Hero() {
             transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
             boxShadow: '0 15px 40px rgba(232, 76, 31, 0.4)',
             position: 'relative',
-            zIndex: 1
+            zIndex: 1,
+            outline: 'none'
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.outline = '2px solid white'
+            e.currentTarget.style.outlineOffset = '2px'
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.outline = 'none'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-5px)'
@@ -138,7 +148,9 @@ function Hero() {
             Demander un Devis
           </button>
 
-          <button style={{
+          <button
+            aria-label="Explorer nos produits de poêles et cheminées"
+            style={{
             padding: '1.2rem 2.5rem',
             background: 'rgba(255, 255, 255, 0.15)',
             color: 'white',
@@ -150,7 +162,15 @@ function Hero() {
             transition: 'all 0.3s ease',
             backdropFilter: 'blur(10px)',
             position: 'relative',
-            zIndex: 1
+            zIndex: 1,
+            outline: 'none'
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.outline = '2px solid white'
+            e.currentTarget.style.outlineOffset = '2px'
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.outline = 'none'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)'
@@ -169,7 +189,9 @@ function Hero() {
       </div>
 
       {/* Scroll indicator - positioned at bottom of section */}
-      <div style={{
+      <div
+        aria-hidden="true"
+        style={{
         position: 'absolute',
         bottom: '2%',
         left: '50%',

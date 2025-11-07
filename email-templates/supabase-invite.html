@@ -192,13 +192,13 @@
 
             <!-- CTA Button -->
             <div class="cta-section">
-                <a href="{{ .ConfirmationURL }}" class="cta-button">Créer mon compte</a>
+                <a href="{{ .ConfirmationURL }}&redirect_to={{ .SiteURL }}/signup" class="cta-button">Créer mon compte</a>
             </div>
 
             <!-- Alternative Section -->
             <div class="alternative-section">
                 <p class="alternative-text">Ou copiez ce lien:</p>
-                <a href="{{ .ConfirmationURL }}" class="alternative-link">{{ .ConfirmationURL }}</a>
+                <a href="{{ .ConfirmationURL }}&redirect_to={{ .SiteURL }}/signup" class="alternative-link">{{ .ConfirmationURL }}&redirect_to={{ .SiteURL }}/signup</a>
             </div>
 
             <!-- Security Note -->

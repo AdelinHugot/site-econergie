@@ -37,14 +37,15 @@ function AppContent() {
   // Rediriger vers /signup si l'utilisateur arrive sur / avec un token d'invitation
   useEffect(() => {
     const checkInvitationToken = async () => {
-      // Vérifier si on est sur la page d'accueil
-      if (location.pathname === '/') {
+      // Vérifier si on est sur la page d'accueil et s'il y a un hash avec un token
+      if (location.pathname === '/' && window.location.hash) {
         // Attendre un peu pour que Supabase traite le token
         setTimeout(async () => {
           try {
             const { data: { user } } = await supabase.auth.getUser()
-            // Si un utilisateur est authentifié et qu'il est sur /, on le redirige vers /signup
-            if (user && !user.user_metadata?.confirmed_at) {
+            // Si un utilisateur est authentifié ET qu'il a un hash (token d'invitation)
+            // on le redirige vers /signup
+            if (user && window.location.hash) {
               navigate('/signup')
             }
           } catch (err) {

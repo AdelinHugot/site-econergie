@@ -7,10 +7,12 @@ import ReviewsEnhanced from '../components/ReviewsEnhanced'
 import WhyEconergie from '../components/WhyEconergie'
 import FAQSection from '../components/FAQSection'
 import NewsletterCTA from '../components/NewsletterCTA'
+import PopupDisplay from '../components/PopupDisplay'
 
 function Home() {
   return (
     <>
+      <PopupDisplay pageSlug="home" />
       <HeroImproved />
       <LifestyleSection />
       <CategoriesEnhanced />

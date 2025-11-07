@@ -6,7 +6,21 @@
       "Bash(ls:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git push)",
+      "Bash(find:*)",
+      "Bash(brew install:*)",
+      "Bash(cwebp:*)",
+      "Bash(git rm:*)",
+      "Bash(tree:*)",
+      "Bash(npm install @supabase/supabase-js)",
+      "mcp__ide__getDiagnostics",
+      "Bash(cd:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm install:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run dev)"
     ],
     "deny": [],
     "ask": []

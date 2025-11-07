@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PopupDisplay from '../components/PopupDisplay'
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -53,6 +54,7 @@ function Contact() {
 
   return (
     <div style={{ minHeight: '100vh', marginTop: '60px' }}>
+      <PopupDisplay pageSlug="contact" />
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',

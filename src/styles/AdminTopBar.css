@@ -1,0 +1,222 @@
+.admin-topbar {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ========== LEFT SIDE ========== */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex: 1;
+}
+
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-logo h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: -0.5px;
+}
+
+/* ========== NAVIGATION ========== */
+.topbar-nav {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  height: 100%;
+}
+
+.topbar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 100%;
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.topbar-nav-icon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.topbar-nav-text {
+  display: inline;
+}
+
+.topbar-nav-item:hover {
+  color: #ff6b35;
+  background-color: rgba(232, 76, 31, 0.08);
+}
+
+.topbar-nav-item.active {
+  color: #ff6b35;
+  font-weight: 600;
+  background-color: rgba(232, 76, 31, 0.1);
+  border-bottom: 3px solid #ff6b35;
+}
+
+/* ========== RIGHT SIDE ========== */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.topbar-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  background: rgba(232, 76, 31, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(232, 76, 31, 0.15);
+}
+
+.topbar-avatar {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-email {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 500;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar-logout {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.topbar-logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.topbar-logout:active {
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .admin-topbar {
+    padding: 0 20px;
+  }
+
+  .topbar-left {
+    gap: 30px;
+  }
+
+  .topbar-nav-item {
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .topbar-logo h1 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-topbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 15px;
+    gap: 12px;
+  }
+
+  .topbar-left {
+    width: 100%;
+    gap: 15px;
+    order: 1;
+  }
+
+  .topbar-logo h1 {
+    font-size: 14px;
+  }
+
+  .topbar-nav {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .topbar-nav-item {
+    padding: 0 10px;
+    font-size: 11px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .topbar-nav-text {
+    display: none;
+  }
+
+  .topbar-right {
+    width: 100%;
+    order: 2;
+    gap: 10px;
+  }
+
+  .topbar-email {
+    display: none;
+  }
+
+  .topbar-user-info {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .topbar-logout {
+    flex: 1;
+    padding: 8px 12px;
+  }
+}

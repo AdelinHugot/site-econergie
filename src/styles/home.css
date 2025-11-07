@@ -7,21 +7,26 @@ section {
 
 /* Consistent section padding */
 @media (min-width: 1401px) {
-  section[style*="padding"] {
+  section[style*="padding"]:not(.filter-section) {
     padding: 6rem 2rem !important;
   }
 }
 
 @media (max-width: 1400px) and (min-width: 769px) {
-  section[style*="padding"] {
+  section[style*="padding"]:not(.filter-section) {
     padding: 5rem 2rem !important;
   }
 }
 
 @media (max-width: 768px) {
-  section[style*="padding"] {
+  section[style*="padding"]:not(.filter-section) {
     padding: 3rem 1.5rem !important;
   }
+}
+
+/* Filter section minimal padding */
+.filter-section {
+  padding: 0.5rem 1rem !important;
 }
 
 /* Typography improvements */

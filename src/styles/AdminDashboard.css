@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+.admin-content-area {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+.admin-content-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-content-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-content-area::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.admin-content-area::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .admin-content-area {
+    padding: 15px;
+  }
+}

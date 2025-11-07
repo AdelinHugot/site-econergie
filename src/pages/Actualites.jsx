@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../services/supabaseClient'
+import PopupDisplay from '../components/PopupDisplay'
 
 function Actualites() {
+  const navigate = useNavigate()
   const [filteredNews, setFilteredNews] = useState('tous')
+  const [news, setNews] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const news = [
+  // Articles par défaut (fallback)
+  const defaultNews = [
     {
       id: 1,
       category: 'produit',
       date: '15 Octobre 2024',
       title: 'Nouvelle Collection Automne 2024 Disponible',
-      image: '/img/Accueil/Poe_le_a__Granule_s_Montargis__1_.webp',
+      image_url: '/img/Accueil/Poe_le_a__Granule_s_Montargis__1_.webp',
       excerpt: 'Découvrez nos nouveaux modèles avec design épuré et performance optimisée.',
       content: 'Nous sommes fiers de présenter notre nouvelle collection automne avec des poêles redessinés et des technologies améliorées.'
     },
@@ -18,7 +26,7 @@ function Actualites() {
       category: 'promotion',
       date: '10 Octobre 2024',
       title: 'Promotion Spéciale : -15% sur les Poêles à Granulés',
-      image: '/img/Accueil/Poe_le_a__bois_Montargis.webp',
+      image_url: '/img/Accueil/Poe_le_a__bois_Montargis.webp',
       excerpt: 'Profitez de notre offre exceptionnelle avant la fin de l\'automne.',
       content: 'Réduction de 15% sur tous nos poêles à granulés jusqu\'à fin octobre. Une belle opportunité pour améliorer votre confort thermique !'
     },
@@ -27,38 +35,47 @@ function Actualites() {
       category: 'conseil',
       date: '5 Octobre 2024',
       title: 'Guide Complet : Bien Choisir son Poêle',
-      image: '/img/Accueil/Poe_le_Domo_Montargis.webp',
+      image_url: '/img/Accueil/Poe_le_Domo_Montargis.webp',
       excerpt: 'Tous les critères à considérer pour faire le bon choix.',
       content: 'Notre expert vous guide à travers tous les paramètres importants : puissance, consommation, design, entretien...'
-    },
-    {
-      id: 4,
-      category: 'environnement',
-      date: '1er Octobre 2024',
-      title: 'Econergie Certifiée Label Vert 2024',
-      image: '/img/Accueil/Poe_les_a__bois_Montargis.webp',
-      excerpt: 'Reconnaissance de notre engagement environnemental.',
-      content: 'Nous avons obtenu la certification Label Vert pour notre engagement dans le développement durable et les énergies renouvelables.'
-    },
-    {
-      id: 5,
-      category: 'client',
-      date: '25 Septembre 2024',
-      title: 'Témoignage Client : La Transformation de la Maison Martin',
-      image: '/img/Accueil/Poe_le_a__Granule_s_Montargis__2_.webp',
-      excerpt: 'Découvrez comment un poêle a changé leur quotidien.',
-      content: 'La famille Martin nous raconte son expérience avec son nouveau poêle design et les économies d\'énergie réalisées.'
-    },
-    {
-      id: 6,
-      category: 'event',
-      date: '20 Septembre 2024',
-      title: 'Salon de l\'Habitat 2024 : Venez nous Rencontrer',
-      image: '/img/Accueil/Bannie_re_Accueil_Rika.webp',
-      excerpt: 'Retrouvez-nous du 22 au 24 septembre au salon.',
-      content: 'Visitez notre stand au Salon de l\'Habitat où nos experts répondront à toutes vos questions et vous feront découvrir nos dernières innovations.'
     }
   ]
+
+  useEffect(() => {
+    fetchArticles()
+  }, [])
+
+  const fetchArticles = async () => {
+    try {
+      const { data, error: fetchError } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('published', true)
+        .order('created_at', { ascending: false })
+
+      if (fetchError) throw fetchError
+
+      // Formater les dates
+      const articlesFormatted = (data || []).map(article => ({
+        ...article,
+        date: new Date(article.created_at).toLocaleDateString('fr-FR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      }))
+
+      // Utiliser les articles de Supabase, sinon les articles par défaut
+      setNews(articlesFormatted.length > 0 ? articlesFormatted : defaultNews)
+    } catch (err) {
+      console.error('Erreur lors du chargement des articles:', err)
+      // En cas d'erreur, utiliser les articles par défaut
+      setNews(defaultNews)
+      setError('Erreur lors du chargement des articles')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const categories = [
     { value: 'tous', label: 'Tous les articles' },
@@ -85,6 +102,7 @@ function Actualites() {
 
   return (
     <div style={{ minHeight: '100vh', marginTop: '60px' }}>
+      <PopupDisplay pageSlug="actualites" />
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
@@ -101,8 +119,8 @@ function Actualites() {
       </section>
 
       {/* Filter Categories */}
-      <section style={{ maxWidth: '1200px', margin: '3rem auto', padding: '0 2rem' }}>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '3rem' }}>
+      <section className="filter-section" style={{ maxWidth: '1200px', margin: '1.5rem auto', padding: '0 1rem' }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '0' }}>
           {categories.map(cat => (
             <button
               key={cat.value}
@@ -129,7 +147,7 @@ function Actualites() {
       </section>
 
       {/* News Feed */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem 4rem' }}>
+      <section style={{ maxWidth: '1200px', margin: '1.5rem auto 0', padding: '0 2rem 4rem' }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -160,7 +178,7 @@ function Actualites() {
               {/* Image */}
               <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
                 <img
-                  src={article.image}
+                  src={article.image_url || '/img/Accueil/Poe_le_a__Granule_s_Montargis__1_.webp'}
                   alt={article.title}
                   style={{
                     width: '100%',
@@ -192,7 +210,7 @@ function Actualites() {
               </div>
 
               {/* Content */}
-              <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <p style={{ color: '#999', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                   {article.date}
                 </p>
@@ -202,20 +220,22 @@ function Actualites() {
                 <p style={{ color: '#666', marginBottom: '1.5rem', lineHeight: 1.6, flex: 1 }}>
                   {article.excerpt}
                 </p>
-                <button style={{
-                  alignSelf: 'flex-start',
-                  background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '0.6rem 1.5rem',
-                  borderRadius: '50px',
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 20px rgba(232, 76, 31, 0.3)'}
-                onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
+                <button
+                  onClick={() => navigate(`/actualites/${article.slug}`)}
+                  style={{
+                    alignSelf: 'flex-start',
+                    background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
+                    color: 'white',
+                    border: 'none',
+                    padding: '0.6rem 1.5rem',
+                    borderRadius: '50px',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 20px rgba(232, 76, 31, 0.3)'}
+                  onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
                 >
                   Lire la suite
                 </button>

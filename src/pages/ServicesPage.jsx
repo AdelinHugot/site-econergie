@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PopupDisplay from '../components/PopupDisplay'
 
 function ServicesPage() {
   const [expandedService, setExpandedService] = useState(0)
@@ -86,6 +87,7 @@ function ServicesPage() {
 
   return (
     <div style={{ minHeight: '100vh', marginTop: '60px' }}>
+      <PopupDisplay pageSlug="services" />
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',

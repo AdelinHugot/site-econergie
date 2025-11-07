@@ -23,14 +23,19 @@ if (!N8N_WEBHOOK_URL) {
  * @param {string} userMessage - Le message de l'utilisateur
  * @param {object} userData - Les données utilisateur collectées {email, phone, name, etc}
  * @param {array} conversationHistory - L'historique de la conversation
+ * @param {object} sessionContext - Contexte de session {sessionId, isInitialized}
  * @returns {Promise<object>} La réponse du bot avec texte et boutons
  */
-export const sendMessageToN8N = async (userMessage, userData = {}, conversationHistory = []) => {
+export const sendMessageToN8N = async (userMessage, userData = {}, conversationHistory = [], sessionContext = {}) => {
   const payload = {
     message: userMessage,
     userData: userData,
     conversationHistory: conversationHistory,
     timestamp: new Date().toISOString(),
+    session: {
+      id: sessionContext.sessionId || null,
+      isInitialized: sessionContext.isInitialized || false
+    }
   }
 
   try {
@@ -60,6 +65,7 @@ export const sendMessageToN8N = async (userMessage, userData = {}, conversationH
  * @param {string} userMessage - Le message de l'utilisateur
  * @param {object} userData - Les données utilisateur
  * @param {array} conversationHistory - L'historique
+ * @param {object} sessionContext - Contexte de session
  * @param {number} attempt - Le numéro de tentative actuelle
  * @returns {Promise<object>} La réponse du bot
  */
@@ -67,10 +73,11 @@ export const sendMessageWithRetry = async (
   userMessage,
   userData = {},
   conversationHistory = [],
+  sessionContext = {},
   attempt = 1
 ) => {
   try {
-    return await sendMessageToN8N(userMessage, userData, conversationHistory)
+    return await sendMessageToN8N(userMessage, userData, conversationHistory, sessionContext)
   } catch (error) {
     if (attempt < RETRY_ATTEMPTS) {
       console.warn(`Tentative ${attempt} échouée, nouvelle tentative...`)
@@ -79,6 +86,7 @@ export const sendMessageWithRetry = async (
         userMessage,
         userData,
         conversationHistory,
+        sessionContext,
         attempt + 1
       )
     }

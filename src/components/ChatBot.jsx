@@ -3,6 +3,7 @@ import '../styles/ChatBot.css'
 import '../styles/ChatBotForm.css'
 import ChatBotFormInput from './ChatBotFormInput'
 import { sendMessageWithRetry, formatUserData } from '../services/chatbotService'
+import { initializeSession, getSessionContext, storeUserData, isUserDataCollected, markSessionInitialized } from '../services/sessionService'
 
 function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,6 +27,16 @@ function ChatBot() {
   const [userData, setUserData] = useState({})
   const [error, setError] = useState(null)
   const messagesEndRef = useRef(null)
+
+  // Initialiser la session au montage du composant
+  useEffect(() => {
+    initializeSession()
+    // Si l'utilisateur a déjà fourni ses données, les récupérer
+    const previousUserData = isUserDataCollected()
+    if (previousUserData) {
+      markSessionInitialized()
+    }
+  }, [])
 
   // Liste de tips et fun facts
   const tips = [
@@ -107,6 +118,10 @@ function ChatBot() {
     const updatedUserData = formatUserData({ ...userData, ...formData })
     setUserData(updatedUserData)
 
+    // Stocker les données dans la session pour ne pas les renvoyer à chaque message
+    storeUserData(updatedUserData)
+    markSessionInitialized()
+
     // Créer un message de confirmation
     const confirmationMessage = {
       id: messages.length + 1,
@@ -127,10 +142,12 @@ function ChatBot() {
     setIsLoading(true)
 
     try {
+      const sessionContext = getSessionContext()
       const response = await sendMessageWithRetry(
         message,
         customUserData || userData,
-        messages
+        messages,
+        sessionContext
       )
 
       // DEBUG: Log la réponse brute de N8N

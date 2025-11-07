@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const location = useLocation()
+
+  // Cacher le header sur les pages admin
+  if (location.pathname === '/admin' || location.pathname === '/admin-login') {
+    return null
+  }
 
   useEffect(() => {
     const handleScroll = () => {

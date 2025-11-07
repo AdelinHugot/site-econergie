@@ -57,17 +57,6 @@ function SignUp() {
     setPasswordStrength(checkPasswordStrength(pwd))
   }
 
-  // Rediriger après succès
-  useEffect(() => {
-    if (success) {
-      const timer = setTimeout(() => {
-        navigate('/admin-login', {
-          state: { message: 'Compte créé avec succès! Veuillez vous connecter.' }
-        })
-      }, 2500)
-      return () => clearTimeout(timer)
-    }
-  }, [success, navigate])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -137,8 +126,13 @@ function SignUp() {
           <img src="/Econergie_Logo.webp" alt="Econergie" className="success-logo" />
           <span className="success-icon">✓</span>
           <h1>Compte créé avec succès!</h1>
-          <p>Vous allez être redirigé vers la page de connexion...</p>
-          <div className="success-loader"></div>
+          <p>Votre compte administrateur a été créé avec succès.</p>
+          <button
+            className="success-button"
+            onClick={() => navigate('/admin-login')}
+          >
+            Accéder à l'interface administrateur
+          </button>
         </div>
       </div>
     )

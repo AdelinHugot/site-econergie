@@ -95,12 +95,8 @@ function SignUp() {
 
       if (updateError) throw updateError
 
-      // Rediriger vers le login après succès
-      setTimeout(() => {
-        navigate('/admin-login', {
-          state: { message: 'Compte créé avec succès! Veuillez vous connecter.' }
-        })
-      }, 2500)
+      // Afficher la page de succès
+      setSuccess(true)
     } catch (err) {
       console.error('Erreur:', err)
       setError(err.message || 'Une erreur est survenue lors de la création du compte')
@@ -123,6 +119,16 @@ function SignUp() {
   }
 
   if (success) {
+    // Rediriger après 2.5 secondes
+    React.useEffect(() => {
+      const timer = setTimeout(() => {
+        navigate('/admin-login', {
+          state: { message: 'Compte créé avec succès! Veuillez vous connecter.' }
+        })
+      }, 2500)
+      return () => clearTimeout(timer)
+    }, [navigate])
+
     return (
       <div className="signup-success">
         <div className="success-content">

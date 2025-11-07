@@ -29,18 +29,8 @@ export const AuthProvider = ({ children }) => {
 
     checkUser();
 
-    // Écoute les changements d'authentification
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (isMounted) {
-        setUser(session?.user || null);
-      }
-    });
-
     return () => {
       isMounted = false;
-      if (subscription) {
-        subscription.unsubscribe();
-      }
     };
   }, []);
 

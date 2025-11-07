@@ -48,7 +48,11 @@ function AppContent() {
         }
       })
 
-      return () => subscription?.unsubscribe()
+      return () => {
+        if (subscription) {
+          subscription.unsubscribe()
+        }
+      }
     }
   }, [location, navigate])
 

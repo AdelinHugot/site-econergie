@@ -23,6 +23,7 @@ import TimelineShowcase from './pages/TimelineShowcase'
 // Admin Pages
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
+import SignUp from './pages/SignUp'
 
 function AppContent() {
   useEffect(() => {
@@ -48,6 +49,7 @@ function AppContent() {
         <Route path="/timeline-showcase" element={<TimelineShowcase />} />
 
         {/* Admin Routes */}
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route
           path="/admin"

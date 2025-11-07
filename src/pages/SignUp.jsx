@@ -57,6 +57,18 @@ function SignUp() {
     setPasswordStrength(checkPasswordStrength(pwd))
   }
 
+  // Rediriger après succès
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        navigate('/admin-login', {
+          state: { message: 'Compte créé avec succès! Veuillez vous connecter.' }
+        })
+      }, 2500)
+      return () => clearTimeout(timer)
+    }
+  }, [success, navigate])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
@@ -119,16 +131,6 @@ function SignUp() {
   }
 
   if (success) {
-    // Rediriger après 2.5 secondes
-    React.useEffect(() => {
-      const timer = setTimeout(() => {
-        navigate('/admin-login', {
-          state: { message: 'Compte créé avec succès! Veuillez vous connecter.' }
-        })
-      }, 2500)
-      return () => clearTimeout(timer)
-    }, [navigate])
-
     return (
       <div className="signup-success">
         <div className="success-content">

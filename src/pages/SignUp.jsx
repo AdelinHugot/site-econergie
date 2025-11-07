@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabaseClient'
 import '../styles/SignUp.css'
 
 function SignUp() {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -15,13 +14,28 @@ function SignUp() {
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [success, setSuccess] = useState(false)
 
-  // Récupérer l'email depuis l'URL
+  // Récupérer l'email depuis la session Supabase authentifiée
   useEffect(() => {
-    const emailParam = searchParams.get('email')
-    if (emailParam) {
-      setEmail(decodeURIComponent(emailParam))
+    const getAuthenticatedUser = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user?.email) {
+          setEmail(user.email)
+        } else {
+          // Si pas d'utilisateur authentifié, rediriger vers login
+          setError('Session expirée ou invalide. Veuillez cliquer à nouveau sur le lien d\'invitation.')
+          setTimeout(() => {
+            navigate('/admin-login')
+          }, 3000)
+        }
+      } catch (err) {
+        console.error('Erreur lors de la récupération de l\'utilisateur:', err)
+        setError('Erreur de session. Veuillez réessayer.')
+      }
     }
-  }, [searchParams])
+
+    getAuthenticatedUser()
+  }, [navigate])
 
   // Vérifier la force du mot de passe
   const checkPasswordStrength = (pwd) => {

@@ -13,10 +13,12 @@ function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [success, setSuccess] = useState(false)
+  const [isInitializing, setIsInitializing] = useState(true)
 
   // Récupérer l'email depuis la session Supabase authentifiée
   useEffect(() => {
-    const getAuthenticatedUser = async () => {
+    // Attendre que Supabase traite le token d'invitation (délai nécessaire)
+    const timer = setTimeout(async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser()
         if (user?.email) {
@@ -31,10 +33,12 @@ function SignUp() {
       } catch (err) {
         console.error('Erreur lors de la récupération de l\'utilisateur:', err)
         setError('Erreur de session. Veuillez réessayer.')
+      } finally {
+        setIsInitializing(false)
       }
-    }
+    }, 1000) // Délai d'1 seconde pour laisser Supabase traiter le token
 
-    getAuthenticatedUser()
+    return () => clearTimeout(timer)
   }, [navigate])
 
   // Vérifier la force du mot de passe
@@ -103,6 +107,19 @@ function SignUp() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (isInitializing) {
+    return (
+      <div className="signup-success">
+        <div className="success-content">
+          <img src="/Econergie_Logo.webp" alt="Econergie" className="success-logo" />
+          <div className="success-loader"></div>
+          <h1>Vérification de votre invitation...</h1>
+          <p>Veuillez patienter quelques secondes</p>
+        </div>
+      </div>
+    )
   }
 
   if (success) {

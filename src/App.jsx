@@ -36,26 +36,20 @@ function AppContent() {
 
   // Rediriger vers /signup si l'utilisateur arrive sur / avec un token d'invitation
   useEffect(() => {
-    const checkInvitationToken = async () => {
-      // Vérifier si on est sur la page d'accueil et s'il y a un hash avec un token
-      if (location.pathname === '/' && window.location.hash) {
-        // Attendre un peu pour que Supabase traite le token
-        setTimeout(async () => {
-          try {
-            const { data: { user } } = await supabase.auth.getUser()
-            // Si un utilisateur est authentifié ET qu'il a un hash (token d'invitation)
-            // on le redirige vers /signup
-            if (user && window.location.hash) {
-              navigate('/signup')
-            }
-          } catch (err) {
-            console.error('Erreur lors de la vérification du token:', err)
-          }
-        }, 500)
-      }
-    }
+    // Vérifier s'il y a un hash (token) au départ
+    const hasInvitationToken = window.location.hash && !window.location.hash.includes('error')
 
-    checkInvitationToken()
+    if (location.pathname === '/' && hasInvitationToken) {
+      // S'abonner aux changements d'authentification
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+        if (session?.user && event === 'SIGNED_IN') {
+          // Utilisateur vient d'être authentifié via le token d'invitation
+          navigate('/signup')
+        }
+      })
+
+      return () => subscription?.unsubscribe()
+    }
   }, [location, navigate])
 
   const pathname = window.location.pathname;

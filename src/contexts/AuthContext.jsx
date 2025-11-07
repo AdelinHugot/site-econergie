@@ -24,15 +24,14 @@ export const AuthProvider = ({ children }) => {
     checkUser();
 
     // Écoute les changements d'authentification
-    let subscription = null;
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user || null);
     });
 
-    subscription = data?.subscription;
-
     return () => {
-      subscription?.unsubscribe();
+      if (subscription) {
+        subscription.unsubscribe();
+      }
     };
   }, []);
 

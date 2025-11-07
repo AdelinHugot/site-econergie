@@ -9,15 +9,21 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     // Vérifie la session existante au chargement
     const checkUser = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
-        setUser(session?.user || null);
+        if (isMounted) {
+          setUser(session?.user || null);
+        }
       } catch (err) {
         console.error('Error checking user:', err);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -25,10 +31,13 @@ export const AuthProvider = ({ children }) => {
 
     // Écoute les changements d'authentification
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user || null);
+      if (isMounted) {
+        setUser(session?.user || null);
+      }
     });
 
     return () => {
+      isMounted = false;
       if (subscription) {
         subscription.unsubscribe();
       }

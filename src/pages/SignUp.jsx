@@ -100,7 +100,7 @@ function SignUp() {
         navigate('/admin-login', {
           state: { message: 'Compte créé avec succès! Veuillez vous connecter.' }
         })
-      }, 1500)
+      }, 2500)
     } catch (err) {
       console.error('Erreur:', err)
       setError(err.message || 'Une erreur est survenue lors de la création du compte')

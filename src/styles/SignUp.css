@@ -46,18 +46,18 @@
   text-align: center;
 }
 
-.logo-container {
+.signup-page .logo-container {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
 }
 
-.logo-container img {
+.signup-page .logo-container img {
   height: 200%;
   width: auto;
 }
 
-.branding-logo {
+.signup-page .branding-logo {
   max-width: 280px;
   height: 200%;
   animation: slideDown 0.8s ease;

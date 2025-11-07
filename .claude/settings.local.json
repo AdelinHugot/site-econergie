@@ -20,7 +20,8 @@
       "Bash(npm install:*)",
       "Bash(curl:*)",
       "Bash(pkill:*)",
-      "Bash(npm run dev)"
+      "Bash(npm run dev)",
+      "Bash(git log -1 --format='%an %ae')"
     ],
     "deny": [],
     "ask": []

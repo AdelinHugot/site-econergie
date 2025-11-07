@@ -29,8 +29,19 @@ export const AuthProvider = ({ children }) => {
 
     checkUser();
 
+    // Écoute UNIQUEMENT les changements post-authentification
+    // Ne rien faire au montage, juste mettre à jour quand ça change
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (isMounted) {
+        setUser(session?.user || null);
+      }
+    });
+
+    const subscription = data?.subscription;
+
     return () => {
       isMounted = false;
+      subscription?.unsubscribe();
     };
   }, []);
 

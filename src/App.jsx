@@ -41,12 +41,15 @@ function AppContent() {
 
     if (location.pathname === '/' && hasInvitationToken) {
       // S'abonner aux changements d'authentification
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      let subscription = null
+      const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
         if (session?.user && event === 'SIGNED_IN') {
           // Utilisateur vient d'être authentifié via le token d'invitation
           navigate('/signup')
         }
       })
+
+      subscription = data?.subscription
 
       return () => {
         if (subscription) {

@@ -81,9 +81,10 @@ function HeroImproved() {
       <div style={{
         position: 'relative',
         zIndex: 2,
-        maxWidth: '900px',
+        maxWidth: '90%',
+        width: '100%',
         textAlign: 'center',
-        padding: '2rem',
+        padding: 'clamp(1rem, 4vw, 2rem)',
         animation: 'fadeInUp 0.8s ease 0.2s both'
       }}>
 
@@ -95,8 +96,7 @@ function HeroImproved() {
           marginBottom: '1.5rem',
           lineHeight: 1.2,
           textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-          animation: 'slideUp 0.8s ease 0.3s both',
-          whiteSpace: 'nowrap'
+          animation: 'slideUp 0.8s ease 0.3s both'
         }}>
           La Chaleur de l'Authentique
           <span style={{
@@ -129,24 +129,24 @@ function HeroImproved() {
         <div style={{
           display: 'flex',
           justifyContent: 'center',
-          gap: '2rem',
-          marginBottom: '2.5rem',
+          gap: 'clamp(1rem, 2vw, 2rem)',
+          marginBottom: 'clamp(1.5rem, 3vw, 2.5rem)',
           flexWrap: 'wrap',
           animation: 'slideUp 0.8s ease 0.45s both'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255, 255, 255, 0.9)', fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)' }}>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
               <path d="M9 1C4.6 1 1 4.6 1 9S4.6 17 9 17s8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm3.5-9H8v5.5l4.7 2.8.8-1.3-3-1.8z"/>
             </svg>
             Conseil Expert
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255, 255, 255, 0.9)', fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)' }}>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
               <path d="M9 1C4.6 1 1 4.6 1 9s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm1.5-9h-1V5h-1v3H6v1h1.5V11h1v-2H12v-1h-1.5V6z"/>
             </svg>
             Design Premium
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255, 255, 255, 0.9)', fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)' }}>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
               <path d="M9 1C4.6 1 1 4.6 1 9s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm.5-11H8v5l4.2 2.5.8-1.3L9.5 8.5z"/>
             </svg>
@@ -157,18 +157,18 @@ function HeroImproved() {
         {/* CTA Buttons */}
         <div style={{
           display: 'flex',
-          gap: '1.5rem',
+          gap: 'clamp(0.8rem, 2vw, 1.5rem)',
           justifyContent: 'center',
           flexWrap: 'wrap',
           animation: 'slideUp 0.8s ease 0.5s both'
         }}>
           <button style={{
-            padding: '1.2rem 2.5rem',
+            padding: 'clamp(0.7rem, 2vw, 1.2rem) clamp(1.2rem, 4vw, 2.5rem)',
             background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
             color: 'white',
             border: 'none',
             borderRadius: '50px',
-            fontSize: '1.05rem',
+            fontSize: 'clamp(0.9rem, 2vw, 1.05rem)',
             fontWeight: 700,
             cursor: 'pointer',
             transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
@@ -189,12 +189,12 @@ function HeroImproved() {
           </button>
 
           <button style={{
-            padding: '1.2rem 2.5rem',
+            padding: 'clamp(0.7rem, 2vw, 1.2rem) clamp(1.2rem, 4vw, 2.5rem)',
             background: 'rgba(255, 255, 255, 0.15)',
             color: 'white',
             border: '2px solid rgba(255, 255, 255, 0.4)',
             borderRadius: '50px',
-            fontSize: '1.05rem',
+            fontSize: 'clamp(0.9rem, 2vw, 1.05rem)',
             fontWeight: 700,
             cursor: 'pointer',
             transition: 'all 0.3s ease',

@@ -38,14 +38,14 @@ function LifestyleSection() {
 
   return (
     <section style={{
-      padding: '6rem 2rem',
+      padding: 'clamp(3rem, 8vw, 6rem) clamp(1.5rem, 4vw, 2rem)',
       background: 'white'
     }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '5rem',
+          gap: 'clamp(2rem, 5vw, 5rem)',
           alignItems: 'center'
         }}>
           {/* Left side - Image */}
@@ -75,10 +75,10 @@ function LifestyleSection() {
           {/* Right side - Content */}
           <div>
             <h2 style={{
-              fontSize: '2.8rem',
+              fontSize: 'clamp(1.8rem, 5vw, 2.8rem)',
               fontWeight: 800,
               color: '#1a1a1a',
-              marginBottom: '1.5rem',
+              marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
               lineHeight: 1.15
             }}>
               Créer plus qu'un chauffage,
@@ -94,26 +94,26 @@ function LifestyleSection() {
             </h2>
 
             <p style={{
-              fontSize: '1.15rem',
+              fontSize: 'clamp(0.9rem, 2vw, 1.15rem)',
               color: '#666',
-              marginBottom: '3rem',
+              marginBottom: 'clamp(2rem, 4vw, 3rem)',
               lineHeight: 1.8,
               fontWeight: 300
             }}>
               Votre foyer mérite plus qu'une simple source de chaleur. Transformez votre intérieur en un havre de bien-être où chaque moment compte.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(1.2rem, 2vw, 1.8rem)' }}>
               {benefits.map((benefit, idx) => (
                 <div key={idx} style={{
                   display: 'flex',
-                  gap: '1.5rem',
+                  gap: 'clamp(1rem, 2vw, 1.5rem)',
                   alignItems: 'flex-start'
                 }}>
                   <div style={{
                     color: '#e84c1f',
-                    minWidth: '70px',
-                    minHeight: '70px',
+                    minWidth: 'clamp(50px, 10vw, 70px)',
+                    minHeight: 'clamp(50px, 10vw, 70px)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -125,7 +125,7 @@ function LifestyleSection() {
                   </div>
                   <div>
                     <h3 style={{
-                      fontSize: '1.25rem',
+                      fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                       fontWeight: 700,
                       color: '#1a1a1a',
                       marginBottom: '0.5rem'
@@ -133,7 +133,7 @@ function LifestyleSection() {
                       {benefit.title}
                     </h3>
                     <p style={{
-                      fontSize: '0.95rem',
+                      fontSize: 'clamp(0.8rem, 1.5vw, 0.95rem)',
                       color: '#666',
                       lineHeight: 1.6
                     }}>
@@ -145,13 +145,13 @@ function LifestyleSection() {
             </div>
 
             <button style={{
-              marginTop: '2.5rem',
-              padding: '1.2rem 2.5rem',
+              marginTop: 'clamp(1.5rem, 3vw, 2.5rem)',
+              padding: 'clamp(0.7rem, 2vw, 1.2rem) clamp(1.2rem, 4vw, 2.5rem)',
               background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
               color: 'white',
               border: 'none',
               borderRadius: '50px',
-              fontSize: '1.05rem',
+              fontSize: 'clamp(0.9rem, 2vw, 1.05rem)',
               fontWeight: 700,
               cursor: 'pointer',
               transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',

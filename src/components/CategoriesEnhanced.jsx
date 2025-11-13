@@ -88,16 +88,16 @@ function CategoriesEnhanced() {
 
   return (
     <section style={{
-      padding: '5rem 2rem',
+      padding: 'clamp(3rem, 8vw, 5rem) clamp(1.5rem, 4vw, 2rem)',
       background: 'white'
     }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 5vw, 4rem)' }}>
           <h2 style={{
-            fontSize: '2.5rem',
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: 800,
-            marginBottom: '1rem',
+            marginBottom: 'clamp(0.8rem, 1.5vw, 1rem)',
             color: '#1a1a1a'
           }}>
             Notre Univers de Chauffage
@@ -109,7 +109,7 @@ function CategoriesEnhanced() {
             margin: '0 auto 1.5rem'
           }}></div>
           <p style={{
-            fontSize: '1.1rem',
+            fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
             color: '#666',
             maxWidth: '600px',
             margin: '0 auto'
@@ -122,7 +122,7 @@ function CategoriesEnhanced() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '2.5rem'
+          gap: 'clamp(1.5rem, 3vw, 2.5rem)'
         }}>
           {categories.map((category, idx) => (
             <div
@@ -130,13 +130,13 @@ function CategoriesEnhanced() {
               style={{
                 background: category.gradient,
                 borderRadius: '25px',
-                padding: '3rem',
+                padding: 'clamp(1.5rem, 3vw, 3rem)',
                 color: 'white',
                 position: 'relative',
                 overflow: 'hidden',
                 cursor: 'pointer',
                 transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                minHeight: '320px',
+                minHeight: 'clamp(280px, 50vh, 320px)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between'
@@ -170,18 +170,18 @@ function CategoriesEnhanced() {
                 </div>
 
                 <h3 style={{
-                  fontSize: '2rem',
+                  fontSize: 'clamp(1.3rem, 3vw, 2rem)',
                   fontWeight: 800,
-                  marginBottom: '0.8rem'
+                  marginBottom: 'clamp(0.5rem, 1vw, 0.8rem)'
                 }}>
                   {category.title}
                 </h3>
 
                 <p style={{
-                  fontSize: '1.05rem',
+                  fontSize: 'clamp(0.85rem, 1.8vw, 1.05rem)',
                   fontWeight: 300,
                   opacity: 0.95,
-                  marginBottom: '1.5rem'
+                  marginBottom: 'clamp(1rem, 2vw, 1.5rem)'
                 }}>
                   {category.description}
                 </p>
@@ -190,13 +190,13 @@ function CategoriesEnhanced() {
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '1rem',
-                  marginBottom: '1.5rem'
+                  gap: 'clamp(0.7rem, 1.5vw, 1rem)',
+                  marginBottom: 'clamp(1rem, 2vw, 1.5rem)'
                 }}>
                   {/* Rendement */}
                   <div>
                     <p style={{
-                      fontSize: '0.8rem',
+                      fontSize: 'clamp(0.65rem, 1.2vw, 0.8rem)',
                       opacity: 0.8,
                       marginBottom: '0.3rem',
                       fontWeight: 500
@@ -204,7 +204,7 @@ function CategoriesEnhanced() {
                       Rendement
                     </p>
                     <p style={{
-                      fontSize: '1.3rem',
+                      fontSize: 'clamp(1rem, 2vw, 1.3rem)',
                       fontWeight: 700,
                       marginBottom: '0.5rem'
                     }}>
@@ -216,7 +216,7 @@ function CategoriesEnhanced() {
                   {/* Price Range */}
                   <div>
                     <p style={{
-                      fontSize: '0.8rem',
+                      fontSize: 'clamp(0.65rem, 1.2vw, 0.8rem)',
                       opacity: 0.8,
                       marginBottom: '0.3rem',
                       fontWeight: 500
@@ -224,7 +224,7 @@ function CategoriesEnhanced() {
                       Prix
                     </p>
                     <p style={{
-                      fontSize: '1.3rem',
+                      fontSize: 'clamp(1rem, 2vw, 1.3rem)',
                       fontWeight: 700
                     }}>
                       {category.priceRange}
@@ -240,18 +240,18 @@ function CategoriesEnhanced() {
                 alignItems: 'center',
                 position: 'relative',
                 zIndex: 1,
-                paddingTop: '1.5rem',
+                paddingTop: 'clamp(1rem, 2vw, 1.5rem)',
                 borderTop: '1px solid rgba(255, 255, 255, 0.2)'
               }}>
                 <span style={{
-                  fontSize: '0.9rem',
+                  fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)',
                   fontWeight: 500,
                   opacity: 0.9
                 }}>
                   {category.count}
                 </span>
                 <span style={{
-                  fontSize: '1.5rem',
+                  fontSize: 'clamp(1.2rem, 2vw, 1.5rem)',
                   transition: 'transform 0.3s ease'
                 }}>
                   →

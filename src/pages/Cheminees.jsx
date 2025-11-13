@@ -1,627 +1,1099 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import PopupDisplay from '../components/PopupDisplay'
 
 function Cheminees() {
-  const [filter, setFilter] = useState('tous')
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [formStep, setFormStep] = useState(0)
+  const [formData, setFormData] = useState({
+    surface: '',
+    people: '',
+    heating: '',
+    consumption: '',
+    automation: '',
+    name: '',
+    email: '',
+    phone: ''
+  })
 
-  const cheminees = [
+  const chemineeTypes = [
     {
       id: 1,
-      name: 'Cheminée Électrique Design',
-      category: 'electrique',
-      image: '/img/Accueil/Bannie_re_Accueil_Rika.webp',
-      price: '1 200€',
-      description: 'Ambiance chaleureuse sans installation',
-      features: ['Installation facile', 'Économique', 'Chauffage 2000W']
+      title: 'Cheminée Traditionnelle',
+      description: 'Élégance intemporelle avec chaleur authentique. Les cheminées traditionnelles en bois offrent une ambiance incomparable avec matériaux nobles.',
+      image: '/img/Cheminees/cheminees-traditionelle.webp',
+      benefits: ['Chaleur naturelle', 'Ambiance cosy', 'Matériaux nobles'],
+      category: 'bois',
+      cta: 'En savoir plus'
     },
     {
       id: 2,
-      name: 'Cheminée Foyer Ouvert',
-      category: 'foyer',
-      image: '/img/Accueil/Poe_le_a__bois_Montargis.webp',
-      price: '3 500€',
-      description: 'Élégance traditionnelle avec vue sur le feu',
-      features: ['Foyer panoramique', 'Tirage naturel', 'Finitions premium']
+      title: 'Cheminée Double-Face',
+      description: 'Foyer visible de deux côtés pour créer une ambiance dans plusieurs espaces. Chauffage efficace et design remarquable.',
+      image: '/img/Cheminees/cheminees-double-face.webp',
+      benefits: ['2 côtés visibles', 'Ambiance partagée', 'Design remarquable'],
+      category: 'doubleface',
+      cta: 'En savoir plus'
     },
     {
       id: 3,
-      name: 'Cheminée Foyer Fermé Bois',
-      category: 'foyer',
-      image: '/img/Accueil/Poe_le_Domo_Montargis.webp',
-      price: '4 500€',
-      description: 'Performance énergétique optimale',
-      features: ['Rendement 85%', 'Vitre panoramique', 'Double combustion']
+      title: 'Néocube',
+      description: 'Design impressionnant avec styling moderne et installation ultra-rapide. La nouvelle référence en élégance et performance contemporaine.',
+      image: '/img/Cheminees/neocube.webp',
+      benefits: ['Design moderne', 'Installation rapide', 'Performance optimale'],
+      category: 'neocube',
+      cta: 'En savoir plus'
     },
     {
       id: 4,
-      name: 'Cheminée Foyer Fermé Gaz',
-      category: 'gaz',
-      image: '/img/Accueil/Poe_le_a__Granule_s_Montargis.webp',
-      price: '3 200€',
-      description: 'Confort et commodité avec le gaz naturel',
-      features: ['Allumage automatique', 'Thermostat', 'Sécurisée']
-    },
-    {
-      id: 5,
-      name: 'Cheminée Insert Bois',
+      title: 'Insert de Cheminée',
+      description: 'Transformez votre foyer ouvert existant en source de chauffage efficace. Solution de rénovation facile et rapide.',
+      image: '/img/Cheminees/insert-double-face.webp',
+      benefits: ['Rénovation facile', 'Rendement 80%', 'Économies réelles'],
       category: 'insert',
-      image: '/img/Accueil/Poe_les_a__bois_Montargis.webp',
-      price: '2 800€',
-      description: 'Transformez votre foyer ouvert',
-      features: ['Rendement 80%', 'Rénovation facile', 'Chauffage performant']
-    },
-    {
-      id: 6,
-      name: 'Cheminée Murale Moderne',
-      category: 'electrique',
-      image: '/img/Accueil/Poe_le_a__Granule_s_Montargis__1_.webp',
-      price: '1 800€',
-      description: 'Design ultra-modern pour petit espace',
-      features: ['Montage mural', 'LED réaliste', 'Télécommande']
+      cta: 'En savoir plus'
     }
   ]
-
-  const filters = [
-    { value: 'tous', label: 'Tous les modèles' },
-    { value: 'foyer', label: 'Foyer ouvert/fermé' },
-    { value: 'gaz', label: 'Gaz' },
-    { value: 'insert', label: 'Insert' },
-    { value: 'electrique', label: 'Électrique' }
-  ]
-
-  const filteredCheminees = filter === 'tous'
-    ? cheminees
-    : cheminees.filter(c => c.category === filter)
 
   return (
     <div style={{ minHeight: '100vh', marginTop: '60px' }}>
       <PopupDisplay pageSlug="cheminees" />
+
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
         color: 'white',
-        padding: '4rem 2rem',
-        textAlign: 'center'
-      }}>
-        <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem', fontWeight: 800 }}>
-          Nos Cheminées
-        </h1>
-        <p style={{ fontSize: '1.2rem', fontWeight: 300, marginBottom: '1.5rem' }}>
-          Econergie installe la cheminée de vos rêves
-        </p>
-        <p style={{ fontSize: '1rem', fontWeight: 300, opacity: 0.95, maxWidth: '800px', margin: '0 auto' }}>
-          Découvrez notre sélection de cheminées haut de gamme avec foyers acier ou fonte des marques Jotul et Atra.
-          Nous offrons des solutions adaptées à vos besoins et votre intérieur.
-        </p>
-        <div style={{ marginTop: '2rem', fontSize: '1.1rem', fontWeight: 500 }}>
-          📞 02 38 98 90 75 | 🏪 Showroom à Villemandeur
-        </div>
-      </section>
-
-      {/* Introduction Section */}
-      <section style={{
-        maxWidth: '1400px',
-        margin: '4rem auto',
-        padding: '0 2rem'
+        position: 'relative',
+        overflow: 'hidden'
       }}>
         <div style={{
-          background: 'linear-gradient(135deg, rgba(232, 76, 31, 0.08) 0%, rgba(255, 107, 53, 0.08) 100%)',
-          borderRadius: '30px',
-          padding: '4rem',
-          border: '2px solid rgba(232, 76, 31, 0.15)',
-          position: 'relative',
-          overflow: 'hidden'
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 0,
+          alignItems: 'stretch',
+          height: '450px'
         }}>
-          {/* Decorative circles */}
+          {/* Left Side - Text with padding */}
           <div style={{
-            position: 'absolute',
-            top: '-50px',
-            right: '-50px',
-            width: '200px',
-            height: '200px',
-            background: 'radial-gradient(circle, rgba(232, 76, 31, 0.1) 0%, transparent 70%)',
-            borderRadius: '50%'
-          }}></div>
-
-          <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '2rem', color: '#1a1a1a', position: 'relative', zIndex: 1 }}>
-            Pourquoi choisir Econergie ?
-          </h2>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '2rem',
+            padding: '5rem 2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
             position: 'relative',
-            zIndex: 1
+            zIndex: 2,
+            overflow: 'hidden'
           }}>
-            <div>
-              <div style={{
-                fontSize: '2rem',
-                marginBottom: '1rem',
-                display: 'flex',
-                width: '50px',
-                height: '50px',
-                background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-                borderRadius: '15px',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                🔥
-              </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.8rem', color: '#1a1a1a' }}>
-                Une multitude de solutions
-              </h3>
-              <p style={{ fontSize: '0.95rem', color: '#666', lineHeight: 1.8 }}>
-                Pour tous les besoins et tous les styles. Cheminée traditionnelle, insert pour rénover votre foyer existant, ou solution moderne électrique, nous avons ce qu'il vous faut.
-              </p>
-            </div>
+            <h1 style={{
+              fontSize: '3.5rem',
+              fontWeight: 800,
+              marginBottom: '1.5rem',
+              lineHeight: 1.2
+            }}>
+              Nos Cheminées
+            </h1>
+            <p style={{
+              fontSize: '1.2rem',
+              fontWeight: 300,
+              marginBottom: '1.5rem',
+              opacity: 0.95
+            }}>
+              Econergie installe la cheminée de vos rêves
+            </p>
+            <p style={{
+              fontSize: '1rem',
+              opacity: 0.9,
+              lineHeight: 1.8,
+              marginRight: '2rem'
+            }}>
+              Découvrez notre sélection de cheminées haut de gamme avec foyers acier ou fonte des marques Jotul, Atra et Skantherm. Nous offrons des solutions adaptées à vos besoins et votre intérieur.
+            </p>
+          </div>
 
-            <div>
-              <div style={{
-                fontSize: '2rem',
-                marginBottom: '1rem',
-                display: 'flex',
-                width: '50px',
-                height: '50px',
-                background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-                borderRadius: '15px',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                🎯
-              </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.8rem', color: '#1a1a1a' }}>
-                À l'écoute de vos besoins
-              </h3>
-              <p style={{ fontSize: '0.95rem', color: '#666', lineHeight: 1.8 }}>
-                Notre équipe d'experts du Loiret et ses départements limitrophes répond à vos demandes les plus spécifiques. Visitez notre showroom à Villemandeur.
-              </p>
-            </div>
+          {/* Right Side - Image without padding */}
+          <div style={{
+            position: 'relative',
+            overflow: 'hidden',
+            borderRadius: '500px 0 0 500px'
+          }}>
+            <img
+              src="/img/Cheminees/cheminees-traditionelle.webp"
+              alt="Cheminée premium Econergie"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+            />
+            {/* Blur overlay following curved edge */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              background: 'radial-gradient(ellipse 300px 100% at 0% 50%, rgba(0, 0, 0, 0.3) 0%, transparent 50%)',
+              pointerEvents: 'none'
+            }} />
           </div>
         </div>
       </section>
 
-      {/* Types Section */}
-      <section style={{
-        maxWidth: '1400px',
-        margin: '4rem auto',
-        padding: '0 2rem'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem', color: '#1a1a1a' }}>
-            Nos Types de Cheminées
-          </h2>
-          <div style={{
-            width: '60px',
-            height: '4px',
-            background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-            margin: '0 auto'
-          }}></div>
-        </div>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '2rem',
-          marginBottom: '4rem'
-        }}>
-          {[
-            {
-              icon: '🔥',
-              title: 'Cheminée Bois',
-              description: 'La cheminée a toujours été l\'élément central de la maison. Notre collection comprend une gamme de cheminées à bois traditionnelles avec foyer fermé, apportant chaleur et convivialité. Aujourd\'hui, la cheminée peut s\'intégrer dans un intérieur design.',
-              color: '#e84c1f'
-            },
-            {
-              icon: '💨',
-              title: 'Cheminée Gaz',
-              description: 'Profitez du confort et de la commodité du gaz naturel. Allumage automatique, thermostat intégré et efficacité énergétique garantie. Solution idéale pour ceux qui cherchent une alternative facile d\'utilisation.',
-              color: '#ff6b35'
-            },
-            {
-              icon: '🔧',
-              title: 'Insert de Cheminée',
-              description: 'Transformez votre foyer ouvert existant en une source de chauffage efficace et économique. Notre gamme d\'inserts offre des rendements jusqu\'à 80%. Solution de rénovation facile et rapide.',
-              color: '#e84c1f'
-            },
-            {
-              icon: '⚡',
-              title: 'Cheminée Électrique',
-              description: 'Design moderne et installation ultra-facile. Parfait pour les petits espaces et ceux cherchant une ambiance chaleureuse sans travaux. Économique, sécurisée et disponible en plusieurs styles.',
-              color: '#ff6b35'
-            }
-          ].map((type, idx) => (
-            <div
-              key={idx}
-              style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '2rem',
-                boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
-                transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                position: 'relative',
-                overflow: 'hidden',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-12px)'
-                e.currentTarget.style.boxShadow = '0 30px 70px rgba(232, 76, 31, 0.2)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)'
-              }}
-            >
-              {/* Gradient top border */}
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '4px',
-                background: `linear-gradient(90deg, ${type.color} 0%, ${type.color}80 100%)`
-              }}></div>
-
-              {/* Icon */}
-              <div style={{
-                fontSize: '3.5rem',
-                marginBottom: '1.5rem',
-                display: 'inline-block'
-              }}>
-                {type.icon}
-              </div>
-
-              {/* Title */}
-              <h3 style={{
-                fontSize: '1.4rem',
-                fontWeight: 700,
-                color: '#1a1a1a',
-                marginBottom: '1rem',
-                paddingTop: '0.5rem'
-              }}>
-                {type.title}
-              </h3>
-
-              {/* Description */}
-              <p style={{
-                color: '#666',
-                lineHeight: 1.8,
-                fontSize: '0.95rem'
-              }}>
-                {type.description}
-              </p>
-
-              {/* Bottom accent */}
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                right: -50,
-                width: '100px',
-                height: '100px',
-                background: `${type.color}10`,
-                borderRadius: '50%',
-                transition: 'all 0.4s ease'
-              }}></div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Filters */}
-      <section style={{ maxWidth: '1400px', margin: '3rem auto', padding: '0 2rem' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '2rem', color: '#1a1a1a', textAlign: 'center' }}>
-          Nos Modèles
-        </h2>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '3rem' }}>
-          {filters.map(f => (
-            <button
-              key={f.value}
-              onClick={() => setFilter(f.value)}
-              style={{
-                padding: '0.75rem 1.5rem',
-                border: 'none',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: 600,
-                transition: 'all 0.3s ease',
-                background: filter === f.value
-                  ? 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)'
-                  : '#f0f0f0',
-                color: filter === f.value ? 'white' : '#333',
-                boxShadow: filter === f.value ? '0 8px 20px rgba(232, 76, 31, 0.3)' : 'none'
-              }}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* Products Grid */}
-      <section style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem 3rem' }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2.5rem'
-        }}>
-          {filteredCheminees.map(cheminee => (
-            <div
-              key={cheminee.id}
-              style={{
-                background: 'white',
-                borderRadius: '15px',
-                overflow: 'hidden',
-                boxShadow: '0 5px 20px rgba(0,0,0,0.1)',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)'
-                e.currentTarget.style.boxShadow = '0 20px 50px rgba(232, 76, 31, 0.2)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)'
-              }}
-            >
-              <div style={{ height: '250px', overflow: 'hidden' }}>
-                <img
-                  src={cheminee.image}
-                  alt={cheminee.name}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                />
-              </div>
-              <div style={{ padding: '1.5rem' }}>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.5rem', color: '#1a1a1a' }}>
-                  {cheminee.name}
-                </h3>
-                <p style={{ color: '#e84c1f', fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>
-                  {cheminee.price}
-                </p>
-                <p style={{ color: '#666', marginBottom: '1rem', lineHeight: 1.6 }}>
-                  {cheminee.description}
-                </p>
-                <ul style={{ listStyle: 'none', marginBottom: '1.5rem' }}>
-                  {cheminee.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      style={{
-                        paddingLeft: '1.5rem',
-                        position: 'relative',
-                        marginBottom: '0.5rem',
-                        color: '#555'
-                      }}
-                    >
-                      <span style={{ position: 'absolute', left: 0, color: '#e84c1f' }}>✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  style={{
-                    width: '100%',
-                    padding: '0.8rem',
-                    background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 20px rgba(232, 76, 31, 0.3)'}
-                  onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
-                >
-                  Demander un devis
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Catalogues Section */}
-      <section style={{
-        background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
-        padding: '5rem 2rem',
-        margin: '4rem 0 0'
-      }}>
+      {/* Types de Cheminées Section */}
+      <section style={{ padding: '4rem 2rem', background: 'white' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem', color: 'white' }}>
-              Nos Catalogues
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{
+              fontSize: '2.2rem',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              marginBottom: '0.5rem'
+            }}>
+              Types de Cheminées
             </h2>
-            <div style={{
-              width: '60px',
-              height: '4px',
-              background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-              margin: '0 auto 1.5rem'
-            }}></div>
-            <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.8)', maxWidth: '600px', margin: '0 auto' }}>
-              Consultez nos catalogues détaillés pour découvrir notre sélection complète
+            <p style={{
+              fontSize: '1.05rem',
+              color: '#666',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: 1.8
+            }}>
+              Trouvez la cheminée qui correspond à votre style et vos besoins
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '3rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '2.5rem'
           }}>
-            {[
-              {
-                title: 'Cheminées Skantherm',
-                description: 'Chaleur. Esthétisme. Force. Atmosphère. Un élément unique avec de nombreuses facettes.',
-                icon: '📘'
-              },
-              {
-                title: 'Cheminées Jotul',
-                description: 'Qualité scandinave reconnue mondialement pour sa performance et son design intemporel.',
-                icon: '📗'
-              },
-              {
-                title: 'Inserts & Solutions Atra',
-                description: 'Gamme complète d\'inserts et de solutions de transformation pour vos foyers existants.',
-                icon: '📙'
-              }
-            ].map((catalog, idx) => (
+            {chemineeTypes.map(type => (
               <div
-                key={idx}
+                key={type.id}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  borderRadius: '20px',
-                  padding: '2.5rem',
-                  textAlign: 'center',
-                  border: '1px solid rgba(232, 76, 31, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  background: 'white',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  boxShadow: '0 5px 20px rgba(0,0,0,0.1)',
+                  transition: 'all 0.3s ease',
                   cursor: 'pointer'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(232, 76, 31, 0.15)'
                   e.currentTarget.style.transform = 'translateY(-8px)'
-                  e.currentTarget.style.borderColor = 'rgba(232, 76, 31, 0.5)'
+                  e.currentTarget.style.boxShadow = '0 20px 50px rgba(232, 76, 31, 0.2)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
                   e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.borderColor = 'rgba(232, 76, 31, 0.2)'
+                  e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)'
                 }}
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
-                  {catalog.icon}
+                <div style={{ height: '250px', overflow: 'hidden' }}>
+                  <img
+                    src={type.image}
+                    alt={type.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
                 </div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: 'white' }}>
-                  {catalog.title}
-                </h3>
-                <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', lineHeight: 1.6, fontSize: '0.95rem' }}>
-                  {catalog.description}
-                </p>
-                <button style={{
-                  padding: '0.8rem 1.5rem',
-                  background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '50px',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  fontSize: '0.95rem',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 8px 20px rgba(232, 76, 31, 0.2)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(232, 76, 31, 0.4)'
-                  e.currentTarget.style.transform = 'scale(1.05)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(232, 76, 31, 0.2)'
-                  e.currentTarget.style.transform = 'scale(1)'
-                }}
-                >
-                  📥 Télécharger
-                </button>
+                <div style={{ padding: '1.5rem' }}>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.5rem', color: '#1a1a1a' }}>
+                    {type.title}
+                  </h3>
+                  <p style={{ color: '#666', marginBottom: '1rem', lineHeight: 1.6, fontSize: '0.95rem' }}>
+                    {type.description}
+                  </p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {type.benefits.map((benefit, idx) => (
+                      <span
+                        key={idx}
+                        style={{
+                          fontSize: '0.8rem',
+                          background: 'linear-gradient(135deg, rgba(232, 76, 31, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%)',
+                          color: '#e84c1f',
+                          padding: '0.4rem 0.8rem',
+                          borderRadius: '20px',
+                          fontWeight: 600
+                        }}
+                      >
+                        {benefit}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section style={{
-        background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
-        color: 'white',
-        padding: '5rem 2rem',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        {/* Decorative elements */}
-        <div style={{
-          position: 'absolute',
-          top: '-100px',
-          right: '-100px',
-          width: '300px',
-          height: '300px',
-          background: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '50%'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          bottom: '-50px',
-          left: '-50px',
-          width: '200px',
-          height: '200px',
-          background: 'rgba(255, 255, 255, 0.05)',
-          borderRadius: '50%'
-        }}></div>
+      {/* Brands Carousel Section */}
+      <section style={{ padding: '4rem 2rem', background: 'white' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{
+              fontSize: '2.2rem',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              marginBottom: '0.5rem'
+            }}>
+              Nos Marques Partenaires
+            </h2>
+            <p style={{
+              fontSize: '1.05rem',
+              color: '#666',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: 1.8
+            }}>
+              Econergie travaille avec les plus grandes marques européennes de cheminées
+            </p>
+          </div>
 
-        <div style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.2 }}>
-            Prêt à trouver votre cheminée ?
-          </h2>
-          <p style={{ fontSize: '1.15rem', fontWeight: 300, marginBottom: '3rem', opacity: 0.95 }}>
-            Nos experts sont à votre disposition pour vous conseiller et vous proposer la solution parfaite pour votre intérieur.
-          </p>
+          <div style={{
+            position: 'relative',
+            maxWidth: '900px',
+            margin: '0 auto'
+          }}>
+            {/* Carousel Container */}
+            <div style={{
+              overflow: 'hidden',
+              borderRadius: '16px',
+              background: '#f9f9f9',
+              padding: '2rem',
+              position: 'relative'
+            }}>
+              <div style={{
+                display: 'flex',
+                gap: '1rem',
+                transition: 'transform 0.5s ease',
+                transform: `translateX(-${carouselIndex * 100}%)`
+              }}>
+                {[
+                  { name: 'jotul', file: 'jotul' },
+                  { name: 'atra', file: 'atra' },
+                  { name: 'skantherm', file: 'skantherm' },
+                  { name: 'rika', file: 'rika' },
+                  { name: 'piveteau', file: 'piveteau' }
+                ].map((brand) => (
+                  <div key={brand.name} style={{
+                    flex: '0 0 calc(33.333% - 0.667rem)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '150px',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    padding: '1rem'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)'
+                  }}
+                  >
+                    <img
+                      src={`/logos-marques/${brand.file}-logo.webp`}
+                      alt={brand.name}
+                      style={{
+                        maxWidth: '90%',
+                        maxHeight: '100px',
+                        objectFit: 'contain',
+                        width: 'auto',
+                        height: 'auto'
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button style={{
-              padding: '1.1rem 2.5rem',
-              background: 'white',
-              color: '#e84c1f',
-              border: 'none',
-              borderRadius: '50px',
-              cursor: 'pointer',
-              fontWeight: 700,
-              fontSize: '1rem',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 15px 40px rgba(0,0,0,0.2)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px)'
-              e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.3)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 15px 40px rgba(0,0,0,0.2)'
-            }}
+            {/* Previous Button */}
+            <button
+              onClick={() => setCarouselIndex((prev) => (prev === 0 ? 1 : prev - 1))}
+              style={{
+                position: 'absolute',
+                left: '-60px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 15px rgba(232, 76, 31, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(232, 76, 31, 0.4)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(-50%)'
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(232, 76, 31, 0.3)'
+              }}
             >
-              📞 02 38 98 90 75
+              ‹
             </button>
-            <button style={{
-              padding: '1.1rem 2.5rem',
-              background: 'rgba(255, 255, 255, 0.15)',
-              color: 'white',
-              border: '2px solid rgba(255, 255, 255, 0.5)',
-              borderRadius: '50px',
-              cursor: 'pointer',
-              fontWeight: 700,
-              fontSize: '1rem',
-              transition: 'all 0.3s ease',
-              backdropFilter: 'blur(10px)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)'
-              e.currentTarget.style.borderColor = 'white'
-              e.currentTarget.style.transform = 'translateY(-3px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
+
+            {/* Next Button */}
+            <button
+              onClick={() => setCarouselIndex((prev) => (prev === 1 ? 0 : prev + 1))}
+              style={{
+                position: 'absolute',
+                right: '-60px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 15px rgba(232, 76, 31, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(232, 76, 31, 0.4)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(-50%)'
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(232, 76, 31, 0.3)'
+              }}
             >
-              🏪 Visiter le showroom
+              ›
             </button>
+
+            {/* Dots Indicator */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '0.8rem',
+              marginTop: '2rem'
+            }}>
+              {[0, 1].map((idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCarouselIndex(idx)}
+                  style={{
+                    width: carouselIndex === idx ? '24px' : '10px',
+                    height: '10px',
+                    borderRadius: '50px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: carouselIndex === idx
+                      ? 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)'
+                      : '#ddd',
+                    transition: 'all 0.3s ease'
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Comparison Table Section */}
+      <section style={{ padding: '4rem 2rem', background: '#f9f9f9' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{
+              fontSize: '2.2rem',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              marginBottom: '0.5rem'
+            }}>
+              Comparer les Types de Cheminées
+            </h2>
+            <p style={{
+              fontSize: '1.05rem',
+              color: '#666',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: 1.8
+            }}>
+              Trouvez la cheminée qui correspond à vos besoins
+            </p>
+          </div>
+
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              background: 'white',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              boxShadow: '0 2px 15px rgba(0,0,0,0.08)'
+            }}>
+              <thead>
+                <tr style={{ background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)', color: 'white' }}>
+                  <th style={{ padding: '1.5rem', textAlign: 'left', fontWeight: 700 }}>Type de Cheminée</th>
+                  <th style={{ padding: '1.5rem', textAlign: 'left', fontWeight: 700 }}>Rendement</th>
+                  <th style={{ padding: '1.5rem', textAlign: 'left', fontWeight: 700 }}>Installation</th>
+                  <th style={{ padding: '1.5rem', textAlign: 'left', fontWeight: 700 }}>Coût</th>
+                  <th style={{ padding: '1.5rem', textAlign: 'left', fontWeight: 700 }}>Ambiance</th>
+                  <th style={{ padding: '1.5rem', textAlign: 'left', fontWeight: 700 }}>Maintenance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    type: 'Cheminée Traditionnelle',
+                    rendement: '80-85%',
+                    installation: 'Professionnelle',
+                    cout: '€€€',
+                    ambiance: 'Authentique',
+                    maintenance: 'Régulière'
+                  },
+                  {
+                    type: 'Cheminée Double-Face',
+                    rendement: '80-90%',
+                    installation: 'Professionnelle',
+                    cout: '€€€',
+                    ambiance: 'Partagée',
+                    maintenance: 'Régulière'
+                  },
+                  {
+                    type: 'Néocube',
+                    rendement: '85-90%',
+                    installation: 'Rapide',
+                    cout: '€€',
+                    ambiance: 'Moderne',
+                    maintenance: 'Minime'
+                  },
+                  {
+                    type: 'Insert de Cheminée',
+                    rendement: '80%',
+                    installation: 'Rénovation',
+                    cout: '€€',
+                    ambiance: 'Améliorée',
+                    maintenance: 'Faible'
+                  }
+                ].map((item, idx) => (
+                  <tr key={idx} style={{ borderBottom: '1px solid #f0f0f0', background: idx % 2 === 0 ? 'white' : '#f9f9f9' }}>
+                    <td style={{ padding: '1.5rem', fontWeight: 600, color: '#1a1a1a' }}>{item.type}</td>
+                    <td style={{ padding: '1.5rem', color: '#666' }}>{item.rendement}</td>
+                    <td style={{ padding: '1.5rem', color: '#666' }}>{item.installation}</td>
+                    <td style={{ padding: '1.5rem', color: '#e84c1f', fontWeight: 700 }}>{item.cout}</td>
+                    <td style={{ padding: '1.5rem', color: '#666' }}>{item.ambiance}</td>
+                    <td style={{ padding: '1.5rem', color: '#666' }}>{item.maintenance}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Guide Section */}
+      <section style={{ padding: '4rem 2rem', background: 'white' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{
+              fontSize: '2.2rem',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              marginBottom: '0.5rem'
+            }}>
+              Comment Choisir Votre Cheminée ?
+            </h2>
+            <p style={{
+              fontSize: '1.05rem',
+              color: '#666',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: 1.8
+            }}>
+              Répondez à quelques questions pour trouver la cheminée idéale
+            </p>
+          </div>
+
+          <div style={{
+            maxWidth: '700px',
+            margin: '0 auto',
+            background: 'linear-gradient(135deg, #f9f9f9 0%, #fff 100%)',
+            padding: '3rem',
+            borderRadius: '20px',
+            boxShadow: '0 8px 30px rgba(232, 76, 31, 0.1)'
+          }}>
+            {/* Progress Bar */}
+            <div style={{ marginBottom: '2.5rem' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: '1rem'
+              }}>
+                {[0, 1, 2, 3, 4, 5].map((step) => (
+                  <div key={step} style={{
+                    flex: 1,
+                    height: '6px',
+                    borderRadius: '3px',
+                    background: step <= formStep
+                      ? 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)'
+                      : '#e9e9e9',
+                    transition: 'all 0.3s ease',
+                    marginRight: step < 5 ? '0.5rem' : 0
+                  }} />
+                ))}
+              </div>
+              <p style={{ fontSize: '0.9rem', color: '#666', margin: 0 }}>
+                Étape {formStep + 1} sur 6
+              </p>
+            </div>
+
+            {/* Form Content */}
+            <div style={{ minHeight: '250px' }}>
+              {formStep === 0 && (
+                <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
+                    color: '#1a1a1a',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Quelle est la surface à chauffer?
+                  </h3>
+                  <input
+                    type="number"
+                    placeholder="Ex: 80"
+                    value={formData.surface}
+                    onChange={(e) => setFormData({...formData, surface: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      fontSize: '1.1rem',
+                      border: '2px solid #e9e9e9',
+                      borderRadius: '12px',
+                      boxSizing: 'border-box',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#e84c1f'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#e9e9e9'}
+                  />
+                  <p style={{ fontSize: '0.9rem', color: '#999', marginTop: '1rem' }}>
+                    En mètres carrés (m²)
+                  </p>
+                </div>
+              )}
+
+              {formStep === 1 && (
+                <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
+                    color: '#1a1a1a',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Quel style préférez-vous?
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                    {['Traditionnel', 'Moderne', 'Minimaliste', 'Éclectique'].map((option, idx) => (
+                      <label key={idx} style={{
+                        padding: '1rem',
+                        border: '2px solid #e9e9e9',
+                        borderRadius: '12px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        background: formData.people === option ? 'linear-gradient(135deg, rgba(232, 76, 31, 0.08) 0%, rgba(255, 107, 53, 0.04) 100%)' : 'white',
+                        borderColor: formData.people === option ? '#e84c1f' : '#e9e9e9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (formData.people !== option) {
+                          e.currentTarget.style.borderColor = '#ff9a7e'
+                          e.currentTarget.style.background = 'rgba(232, 76, 31, 0.02)'
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (formData.people !== option) {
+                          e.currentTarget.style.borderColor = '#e9e9e9'
+                          e.currentTarget.style.background = 'white'
+                        }
+                      }}
+                      >
+                        <input
+                          type="radio"
+                          name="style"
+                          value={option}
+                          checked={formData.people === option}
+                          onChange={() => setFormData({...formData, people: option})}
+                          style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                        />
+                        <span style={{ fontWeight: 500, color: '#1a1a1a' }}>{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {formStep === 2 && (
+                <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
+                    color: '#1a1a1a',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Avez-vous un foyer existant?
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
+                    {['Oui', 'Non'].map((option) => (
+                      <button key={option} onClick={() => setFormData({...formData, heating: option})}
+                        style={{
+                          padding: '1rem',
+                          border: '2px solid #e9e9e9',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          background: formData.heating === option ? 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)' : 'white',
+                          color: formData.heating === option ? 'white' : '#1a1a1a',
+                          fontWeight: 600,
+                          borderColor: formData.heating === option ? '#e84c1f' : '#e9e9e9'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (formData.heating !== option) {
+                            e.currentTarget.style.borderColor = '#ff9a7e'
+                            e.currentTarget.style.background = 'rgba(232, 76, 31, 0.05)'
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (formData.heating !== option) {
+                            e.currentTarget.style.borderColor = '#e9e9e9'
+                            e.currentTarget.style.background = 'white'
+                          }
+                        }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {formStep === 3 && (
+                <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
+                    color: '#1a1a1a',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Budget estimé?
+                  </h3>
+                  <input
+                    type="number"
+                    placeholder="Ex: 4000"
+                    value={formData.consumption}
+                    onChange={(e) => setFormData({...formData, consumption: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      fontSize: '1.1rem',
+                      border: '2px solid #e9e9e9',
+                      borderRadius: '12px',
+                      boxSizing: 'border-box',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#e84c1f'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#e9e9e9'}
+                  />
+                  <p style={{ fontSize: '0.9rem', color: '#999', marginTop: '1rem' }}>
+                    En euros (€)
+                  </p>
+                </div>
+              )}
+
+              {formStep === 4 && (
+                <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
+                    color: '#1a1a1a',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Priorité principale?
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                    {[
+                      { value: 'ambiance', label: 'Ambiance', desc: 'Crée une atmosphère chaleureuse' },
+                      { value: 'performance', label: 'Performance', desc: 'Chauffage efficace et économique' }
+                    ].map((option) => (
+                      <label key={option.value} style={{
+                        padding: '1.2rem',
+                        border: '2px solid #e9e9e9',
+                        borderRadius: '12px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        background: formData.automation === option.value ? 'linear-gradient(135deg, rgba(232, 76, 31, 0.08) 0%, rgba(255, 107, 53, 0.04) 100%)' : 'white',
+                        borderColor: formData.automation === option.value ? '#e84c1f' : '#e9e9e9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (formData.automation !== option.value) {
+                          e.currentTarget.style.borderColor = '#ff9a7e'
+                          e.currentTarget.style.background = 'rgba(232, 76, 31, 0.02)'
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (formData.automation !== option.value) {
+                          e.currentTarget.style.borderColor = '#e9e9e9'
+                          e.currentTarget.style.background = 'white'
+                        }
+                      }}
+                      >
+                        <input
+                          type="radio"
+                          name="priority"
+                          value={option.value}
+                          checked={formData.automation === option.value}
+                          onChange={() => setFormData({...formData, automation: option.value})}
+                          style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                        />
+                        <div>
+                          <p style={{ fontWeight: 600, color: '#1a1a1a', margin: 0 }}>{option.label}</p>
+                          <p style={{ fontSize: '0.85rem', color: '#999', margin: '0.3rem 0 0 0' }}>{option.desc}</p>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {formStep === 5 && (
+                <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
+                    color: '#1a1a1a',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Vos informations de contact
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                    <div>
+                      <label style={{
+                        display: 'block',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                        color: '#1a1a1a',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Votre nom
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ex: Jean Dupont"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          fontSize: '1rem',
+                          border: '2px solid #e9e9e9',
+                          borderRadius: '12px',
+                          boxSizing: 'border-box',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onFocus={(e) => e.currentTarget.style.borderColor = '#e84c1f'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = '#e9e9e9'}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{
+                        display: 'block',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                        color: '#1a1a1a',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Votre email
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="Ex: jean@example.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          fontSize: '1rem',
+                          border: '2px solid #e9e9e9',
+                          borderRadius: '12px',
+                          boxSizing: 'border-box',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onFocus={(e) => e.currentTarget.style.borderColor = '#e84c1f'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = '#e9e9e9'}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{
+                        display: 'block',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                        color: '#1a1a1a',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Votre téléphone
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="Ex: 06 12 34 56 78"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          fontSize: '1rem',
+                          border: '2px solid #e9e9e9',
+                          borderRadius: '12px',
+                          boxSizing: 'border-box',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onFocus={(e) => e.currentTarget.style.borderColor = '#e84c1f'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = '#e9e9e9'}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Navigation Buttons */}
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              marginTop: '2.5rem',
+              justifyContent: 'space-between'
+            }}>
+              <button
+                onClick={() => setFormStep(Math.max(0, formStep - 1))}
+                style={{
+                  padding: '0.9rem 2rem',
+                  background: 'white',
+                  color: '#e84c1f',
+                  border: '2px solid #e84c1f',
+                  borderRadius: '10px',
+                  fontSize: '0.95rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  opacity: formStep === 0 ? 0.5 : 1,
+                  pointerEvents: formStep === 0 ? 'none' : 'auto'
+                }}
+              >
+                ← Précédent
+              </button>
+
+              {formStep < 5 ? (
+                <button
+                  onClick={() => setFormStep(formStep + 1)}
+                  style={{
+                    padding: '0.9rem 2rem',
+                    background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '10px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 15px rgba(232, 76, 31, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(232, 76, 31, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(232, 76, 31, 0.3)'
+                  }}
+                >
+                  {formStep === 4 ? 'Obtenir ma Recommandation' : 'Suivant →'}
+                </button>
+              ) : (
+                <button
+                  style={{
+                    padding: '0.9rem 2rem',
+                    background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '10px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 15px rgba(232, 76, 31, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(232, 76, 31, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(232, 76, 31, 0.3)'
+                  }}
+                >
+                  Soumettre mon Formulaire
+                </button>
+              )}
+            </div>
+
+            <style>{`
+              @keyframes fadeIn {
+                from {
+                  opacity: 0;
+                  transform: translateY(10px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+            `}</style>
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section style={{ padding: '4rem 2rem', background: '#f9f9f9' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{
+              fontSize: '2.2rem',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              marginBottom: '1rem'
+            }}>
+              Nos Certifications
+            </h2>
+            <p style={{
+              fontSize: '1.05rem',
+              color: '#666',
+              marginBottom: '3rem'
+            }}>
+              Econergie est certifiée RGE Qualibois
+            </p>
+
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '3rem',
+              flexWrap: 'wrap'
+            }}>
+              <div style={{
+                textAlign: 'center',
+                padding: '2rem'
+              }}>
+                <img
+                  src="/img/logo-rge-qualibat-et-bois-1.webp"
+                  alt="RGE Qualibois"
+                  style={{
+                    maxWidth: '200px',
+                    height: 'auto'
+                  }}
+                />
+              </div>
+
+              <div style={{
+                background: 'white',
+                padding: '2rem',
+                borderRadius: '12px',
+                maxWidth: '400px',
+                boxShadow: '0 2px 15px rgba(0,0,0,0.08)'
+              }}>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: 700,
+                  color: '#1a1a1a',
+                  marginBottom: '1rem'
+                }}>
+                  Qu'est-ce que RGE Qualibois?
+                </h3>
+                <p style={{
+                  color: '#666',
+                  lineHeight: 1.7,
+                  fontSize: '0.95rem'
+                }}>
+                  La certification RGE Qualibois garantit l'expertise d'Econergie dans l'installation de cheminées et inserts. Elle vous permet d'accéder à des aides financières gouvernementales pour vos travaux de chauffage.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section[style*="gridTemplateColumns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+          }
+
+          section[style*="gridTemplateColumns: 1fr 1fr"] > div {
+            grid-template-columns: 1fr !important;
+            min-height: auto !important;
+          }
+
+          div[style*="padding: 5rem 2rem"][style*="flexDirection"] {
+            padding: 3rem 2rem !important;
+          }
+
+          div[style*="borderRadius: 500px 0 0 500px"] {
+            border-radius: 300px 300px 0 0 !important;
+          }
+
+          h1[style*="fontSize: 3.5rem"] {
+            font-size: 2.5rem !important;
+          }
+
+          div[style*="height: 450px"] > div:last-child {
+            height: 300px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          h1[style*="fontSize: 3.5rem"] {
+            font-size: 2rem !important;
+          }
+
+          div[style*="height: 450px"] > div:last-child {
+            height: 250px !important;
+          }
+
+          p[style*="fontSize: 1.2rem"] {
+            font-size: 1rem !important;
+          }
+
+          div[style*="padding: 5rem 2rem"][style*="flexDirection"] {
+            padding: 2rem 1.5rem !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

@@ -207,14 +207,14 @@ function Realizations() {
         </div>
 
         {/* CSS for mobile optimization */}
-        <style>{\`
+        <style>{`
           @media (max-width: 480px) {
             div[style*="gridTemplateColumns: repeat(auto-fit"] {
               gridTemplateColumns: 1fr !important;
               gap: 1rem !important;
             }
           }
-        \`}</style>
+        `}</style>
 
         {/* Modal Detail */}
         {selectedProject && (

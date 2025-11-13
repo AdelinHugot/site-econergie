@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import '../styles/Header.css'
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -20,6 +21,11 @@ function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Fermer le menu quand la route change
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [location])
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -30,90 +36,64 @@ function Header() {
     { to: '/services', label: 'Services' },
     { to: '/apropos', label: 'À Propos' },
     { to: '/actualites', label: 'Actualités' },
-    { to: '/catalogues', label: 'Catalogues' }
+    { to: '/catalogues', label: 'Catalogues' },
+    { to: '/contact', label: 'Contact' }
   ]
 
   return (
-    <header style={isScrolled ? { boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)' } : {}}>
-      <nav>
-        <div className="logo-container">
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <img src="/ECONERGIE vertical noir.svg" alt="Econergie Logo" style={{ height: '50px', width: 'auto' }} />
-          </Link>
-        </div>
-
-        {/* Hamburger Button - Hidden by default, shown on mobile */}
-        <button
-          className="hamburger-toggle"
-          onClick={toggleMenu}
-          style={{
-            display: 'none',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '0.5rem',
-            zIndex: 1001,
-            color: '#333',
-            fontSize: '1.5rem'
-          }}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? '✕' : '☰'}
-        </button>
-
-        {/* Navigation List */}
-        <ul
-          style={{
-            display: 'flex',
-            gap: '3rem',
-            alignItems: 'center',
-            listStyle: 'none',
-            margin: 0,
-            padding: 0,
-            // Mobile styles applied via CSS media query
-            position: isMenuOpen ? 'absolute' : 'static',
-            top: isMenuOpen ? '60px' : 'auto',
-            left: isMenuOpen ? 0 : 'auto',
-            right: isMenuOpen ? 0 : 'auto',
-            backgroundColor: isMenuOpen ? 'white' : 'transparent',
-            width: isMenuOpen ? '100%' : 'auto',
-            paddingTop: isMenuOpen ? '1rem' : '0',
-            paddingBottom: isMenuOpen ? '1rem' : '0',
-            paddingLeft: isMenuOpen ? '2rem' : '0',
-            paddingRight: isMenuOpen ? '2rem' : '0',
-            flexDirection: isMenuOpen ? 'column' : 'row',
-            boxShadow: isMenuOpen ? '0 8px 16px rgba(0,0,0,0.1)' : 'none',
-            zIndex: 1000
-          }}
-        >
-          {navItems.map(item => (
-            <li key={item.to}>
-              <Link to={item.to} onClick={closeMenu} style={{ display: 'block' }}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-          <li>
-            <Link to="/contact" className="cta-nav" onClick={closeMenu}>
-              Contact
+    <>
+      <header className={isScrolled ? 'scrolled' : ''}>
+        {/* Desktop Navigation */}
+        <nav className="navbar-desktop">
+          <div className="logo-container">
+            <Link to="/">
+              <img src="/ECONERGIE vertical noir.svg" alt="Econergie Logo" />
             </Link>
-          </li>
-        </ul>
-      </nav>
+          </div>
 
-      <style>{`
-        /* Show hamburger button on mobile (max-width: 768px) */
-        @media (max-width: 768px) {
-          .hamburger-toggle {
-            display: block !important;
-          }
+          <ul className="nav-list-desktop">
+            {navItems.map(item => (
+              <li key={item.to}>
+                <Link to={item.to}>{item.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          nav ul {
-            gap: 1rem !important;
-          }
-        }
-      `}</style>
-    </header>
+        {/* Mobile Navigation */}
+        <nav className="navbar-mobile">
+          <Link to="/" className="logo-mobile">
+            <img src="/ECONERGIE vertical noir.svg" alt="Econergie Logo" />
+          </Link>
+
+          <button
+            className={`hamburger-btn ${isMenuOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="mobile-menu-overlay">
+          <ul className="mobile-menu-list">
+            {navItems.map(item => (
+              <li key={item.to}>
+                <Link to={item.to} onClick={closeMenu}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
   )
 }
 

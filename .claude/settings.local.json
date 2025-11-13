@@ -24,7 +24,10 @@
       "Bash(git log -1 --format='%an %ae')",
       "Bash(cat .gitignore)",
       "Bash(git check-ignore:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(/tmp/header_backup.jsx)",
+      "WebFetch(domain:www.econergie-france.com)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []

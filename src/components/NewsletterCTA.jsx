@@ -171,7 +171,7 @@ function NewsletterCTA() {
         </div>
       </div>
 
-      <style>{\`
+      <style>{`
         @media (max-width: 600px) {
           form {
             flex-direction: column !important;

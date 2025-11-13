@@ -138,12 +138,11 @@ function Cheminees() {
               <div style={{
                 fontSize: '2rem',
                 marginBottom: '1rem',
-                display: 'inline-block',
+                display: 'flex',
                 width: '50px',
                 height: '50px',
                 background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
                 borderRadius: '15px',
-                display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
@@ -161,12 +160,11 @@ function Cheminees() {
               <div style={{
                 fontSize: '2rem',
                 marginBottom: '1rem',
-                display: 'inline-block',
+                display: 'flex',
                 width: '50px',
                 height: '50px',
                 background: 'linear-gradient(135deg, #e84c1f 0%, #ff6b35 100%)',
                 borderRadius: '15px',
-                display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>

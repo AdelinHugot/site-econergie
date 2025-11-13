@@ -4,8 +4,8 @@ function HeroImproved() {
   return (
     <section style={{
       position: 'relative',
-      height: '90vh',
-      minHeight: '600px',
+      height: 'clamp(50vh, 90vh, 100vh)',
+      minHeight: 'clamp(350px, 60vh, 600px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -298,6 +298,9 @@ function HeroImproved() {
           }
         }
 
+        @media (max-width: 480px) {
+          div[style*="bottom: 3rem"] { display: none !important; }
+        }
         @keyframes blink {
           0%, 100% {
             opacity: 1;

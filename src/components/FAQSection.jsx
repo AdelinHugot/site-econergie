@@ -288,7 +288,7 @@ function FAQSection() {
           }
 
           div[style*="height: 600px"] {
-            height: 400px !important;
+            height: 300px !important;
           }
 
           h2[style*="fontSize: 2.5rem"] {

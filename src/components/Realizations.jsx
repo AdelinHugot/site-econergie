@@ -139,7 +139,7 @@ function Realizations() {
         {/* Gallery Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '2.5rem',
           marginBottom: '3rem'
         }}>
@@ -205,6 +205,16 @@ function Realizations() {
             </div>
           ))}
         </div>
+
+        {/* CSS for mobile optimization */}
+        <style>{\`
+          @media (max-width: 480px) {
+            div[style*="gridTemplateColumns: repeat(auto-fit"] {
+              gridTemplateColumns: 1fr !important;
+              gap: 1rem !important;
+            }
+          }
+        \`}</style>
 
         {/* Modal Detail */}
         {selectedProject && (

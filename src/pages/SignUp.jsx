@@ -110,7 +110,7 @@ function SignUp() {
     return (
       <div className="signup-success">
         <div className="success-content">
-          <img src="/Econergie_Logo.webp" alt="Econergie" className="success-logo" />
+          <img src="/ECONERGIE vertical noir.svg" alt="Econergie" className="success-logo" />
           <div className="success-loader"></div>
           <h1>Vérification de votre invitation...</h1>
           <p>Veuillez patienter quelques secondes</p>
@@ -123,7 +123,7 @@ function SignUp() {
     return (
       <div className="signup-success">
         <div className="success-content">
-          <img src="/Econergie_Logo.webp" alt="Econergie" className="success-logo" />
+          <img src="/ECONERGIE vertical noir.svg" alt="Econergie" className="success-logo" />
           <span className="success-icon">✓</span>
           <h1>Compte créé avec succès!</h1>
           <p>Votre compte administrateur a été créé avec succès.</p>
@@ -146,7 +146,7 @@ function SignUp() {
         <div className="signup-branding">
           <div className="branding-content">
             <div className="logo-container">
-              <img src="/Econergie_Logo.webp" alt="Econergie" className="branding-logo" />
+              <img src="/ECONERGIE vertical noir.svg" alt="Econergie" className="branding-logo" />
             </div>
             <p className="welcome-text">Bienvenue dans votre</p>
             <p className="admin-text">Espace Administrateur</p>

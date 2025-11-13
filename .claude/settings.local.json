@@ -21,7 +21,10 @@
       "Bash(curl:*)",
       "Bash(pkill:*)",
       "Bash(npm run dev)",
-      "Bash(git log -1 --format='%an %ae')"
+      "Bash(git log -1 --format='%an %ae')",
+      "Bash(cat .gitignore)",
+      "Bash(git check-ignore:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

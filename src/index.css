@@ -986,3 +986,44 @@ footer {
         border-bottom: 2px solid rgba(232, 76, 31, 0.1) !important;
     }
 }
+
+
+/* Mobile-friendly form elements */
+@media (max-width: 600px) {
+  form, .form-group {
+    flex-direction: column !important;
+  }
+  
+  input[type="email"],
+  input[type="text"],
+  input[type="password"],
+  textarea,
+  select {
+    width: 100% !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  button {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+}
+
+/* Hamburger menu styling */
+@media (max-width: 768px) {
+  .hamburger-toggle {
+    display: block !important;
+  }
+  
+  nav ul {
+    gap: 1rem !important;
+  }
+}
+
+/* Hero section mobile optimizations */
+@media (max-width: 480px) {
+  .hero, section[style*="height: clamp"] {
+    margin-top: 0 !important;
+    padding-top: 60px;
+  }
+}
